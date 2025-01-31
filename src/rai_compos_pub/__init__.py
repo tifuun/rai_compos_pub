@@ -7,3 +7,6 @@ from rai_compos_pub.cpw import CPWLayers
 from rai_compos_pub.cpw import CPWSegment
 from rai_compos_pub.cpw import CPWBend
 
+from rai_compos_pub.vialess_msl import MSLHalves
+from rai_compos_pub.vialess_msl import VialessMSL
+
