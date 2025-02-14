@@ -217,7 +217,7 @@ class MSLHalf(rai.Compo):
 
         sizes = (
             # ( 0, GND left, GAP left, SIG left),
-            # ( 0, GND right, GAP right, SIG right),
+            # ( Length, GND right, GAP right, SIG right),
 
             (0     , 0    , 0    , 60),
             (10    , 0    , 0    , 60),
