@@ -173,5 +173,10 @@ class CPWBend(rai.Compo):
         #self.marks.center = signal.marks.center
         #self.marks.start_mid = signal.marks.start_mid
         #self.marks.tl_exit = signal.marks.end_mid
+
         # TODO ansec marks??
+        # YES definitely TODO ansec marks!
+        self.marks.center = (0, 0)
+
+
 
