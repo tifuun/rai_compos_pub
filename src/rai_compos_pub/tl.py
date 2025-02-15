@@ -66,18 +66,7 @@ class TL():
                 )
             )
 
-    def build(self):
-        for before, after in rai.duplets(self.path):
-
-            length = rai.distance_between(before.point, after.point)
-            angle = rai.angle_between(before.point, after.point)
-
-            straight = before.straight_compo(length=length).proxy()
-            straight.rotate(angle)
-            straight.marks.tl_enter.to(before.point)
-
-            self.straights_.append(straight)
-
+    def make_bends(self):
         for before, point, after in rai.triplets(self.path):
 
             spec = construct_bend(before.point, point.point, after.point, 5)
@@ -108,6 +97,30 @@ class TL():
             bend.marks.center.to(spec.point_center)
 
             self.bends_.append(bend)
+
+    def make_straights(self):
+        for before, after in rai.duplets(self.bends_):
+            length = rai.distance_between(
+                before.marks.tl_exit,
+                after.marks.tl_enter
+                )
+            angle = rai.angle_between(
+                before.marks.tl_exit,
+                after.marks.tl_enter
+                )
+
+            straight = self.straight_compo(length=length).proxy()
+            straight.rotate(angle)
+            straight.marks.tl_enter.to(before.marks.tl_exit)
+
+            self.straights_.append(straight)
+
+
+
+    def build(self):
+        self.make_bends()
+        self.make_straights()
+
 
 
 class TurnDirection(Enum):

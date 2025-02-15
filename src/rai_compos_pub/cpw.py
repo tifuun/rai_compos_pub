@@ -177,6 +177,8 @@ class CPWBend(rai.Compo):
         # TODO ansec marks??
         # YES definitely TODO ansec marks!
         self.marks.center = (0, 0)
+        self.marks.tl_enter = (bend_radius, 0)
+        self.marks.tl_exit = rai.polar(arg=dtheta, mod=bend_radius)
 
 
 
