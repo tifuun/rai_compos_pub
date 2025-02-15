@@ -1,5 +1,5 @@
 # Python
-__pycache__
+_54cd084ba34b2a8d879bed8af675f7595411dd5b _pycache__
 __pypackages__
 .pytest_cache
 *.py[cod]
@@ -27,6 +27,7 @@ dmypy.json
 *.pid
 *.rdb
 *.old
+*.old.py
 
 # misc output files
 *.pdf

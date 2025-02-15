@@ -8,7 +8,7 @@ class CPWLayers:
     bridge = rai.Layer('Conducting part of bridge')
     conductor = rai.Layer('Conducting layer for signal and ground lines')
 
-class CPWSegment(rai.Compo):
+class CPWStraight(rai.Compo):
     class Layers(CPWLayers):
         pass
 
@@ -35,8 +35,8 @@ class CPWSegment(rai.Compo):
             )
 
     class Marks:
-        tl_enter = rai.Mark("Start of CPW segment")
-        tl_exit = rai.Mark("End of CPW segment")
+        tl_enter = rai.Mark("Start of CPW straight segment")
+        tl_exit = rai.Mark("End of CPW straight segment")
 
     def _make(
             self,
