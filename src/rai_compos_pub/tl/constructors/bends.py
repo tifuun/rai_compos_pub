@@ -118,8 +118,8 @@ def construct_bend(before, point, after, radius):
         )
 
     return tl.BendSpec(
-        angle_start=angle_turn_start,
-        angle_end=angle_turn_end,
+        theta1=angle_turn_start,
+        dtheta=turn,
         radius=radius,
         point_enter=point_enter,
         point_exit=point_exit,
@@ -129,15 +129,13 @@ def construct_bend(before, point, after, radius):
 def make_bend_component(spec: tl.BendSpec, Compo: rai.t.CompoType):
     # FIXME angle start-end to dtheta here or change spec to have?
 
-    dtheta = spec.angle_end - spec.angle_start
-    
     return (
         Compo(
-            dtheta=dtheta,
+            dtheta=spec.dtheta,
             bend_radius=spec.radius,
             )
         .proxy()
-        .rotate(spec.angle_start)
+        .rotate(spec.theta1)
         .marks.center.to(spec.point_center)
         )
     #return (

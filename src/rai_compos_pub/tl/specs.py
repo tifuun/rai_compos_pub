@@ -23,8 +23,8 @@ from rai_compos_pub import tl
 
 @dataclass
 class BendSpec:
-    angle_start: float
-    angle_end: float
+    theta1: float
+    dtheta: float
     radius: float
     point_enter: rai.t.Point
     point_exit: rai.t.Point
