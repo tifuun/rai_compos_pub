@@ -38,12 +38,16 @@ def construct_bends(path, radius):
 
         newpath.append(
             tl.StraightTo(
-                bendspec.point_enter
+                bendspec.point_enter,
+                # FIXME some sort of clone_from????
+                straight=seg.straight,
                 )
             )
         newpath.append(
             tl.JumpTo(
-                bendspec.point_exit
+                bendspec.point_exit,
+                # FIXME some sort of clone_from????
+                straight=seg.straight,
                 )
             )
         bendspecs.append(bendspec)

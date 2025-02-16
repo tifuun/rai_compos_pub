@@ -165,10 +165,9 @@ class TL():
             )
         return self.bridges_
 
-    def make_straights(self, straight_compo):
+    def make_straights(self):
         self.straights_ = tl.make_straight_components(
-            self.straightspecs_,
-            straight_compo
+            self.straightspecs_
             )
         return self.straights_
 
@@ -218,10 +217,12 @@ class TLTest(rai.Compo):
             tl.StraightTo((30, 10)),
             tl.StraightTo((50, -10)),
             tl.StraightTo((50, 20)),
-            tl.StraightTo((0, 22)),
             tl.StraightTo(
-                (60, 40),
+                (0, 22),
                 straight=StraightB
+                ),
+            tl.StraightTo(
+                (60, 40)
                 ),
             tl.StraightTo((60, 0))
             )
@@ -243,7 +244,7 @@ class TLTest(rai.Compo):
 
         my_tl.make_specs()
 
-        my_tl.make_straights(StraightA)
+        my_tl.make_straights()
         my_tl.make_bends(Bend)
 
         self.subcompos.extend(my_tl.straights_)
