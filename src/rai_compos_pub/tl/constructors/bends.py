@@ -83,8 +83,6 @@ def construct_bend(before, point, after, radius):
                 angle_outgoing + angle_incoming + rai.semicircle
                 ) / 2
 
-            orientation = tl.Orientation.COUNTERCLOCKWISE
-
             angle_turn_start = angle_incoming - rai.quartercircle
             angle_turn_end = angle_outgoing - rai.quartercircle
 
@@ -95,8 +93,6 @@ def construct_bend(before, point, after, radius):
             angle_turn_center = (
                 angle_outgoing + angle_incoming - rai.semicircle
                 ) / 2
-
-            orientation = tl.Orientation.CLOCKWISE
 
             angle_turn_start = angle_incoming + rai.quartercircle
             angle_turn_end = angle_outgoing + rai.quartercircle
@@ -125,7 +121,6 @@ def construct_bend(before, point, after, radius):
         angle_start=angle_turn_start,
         angle_end=angle_turn_end,
         radius=radius,
-        orientation=orientation,
         point_enter=point_enter,
         point_exit=point_exit,
         point_center=point_turn_center,

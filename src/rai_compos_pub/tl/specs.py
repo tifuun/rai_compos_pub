@@ -26,7 +26,6 @@ class BendSpec:
     angle_start: float
     angle_end: float
     radius: float
-    orientation: tl.Orientation
     point_enter: rai.t.Point
     point_exit: rai.t.Point
     point_center: rai.t.Point
