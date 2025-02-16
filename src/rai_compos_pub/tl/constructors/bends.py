@@ -7,7 +7,7 @@ import raimad as rai
 
 from rai_compos_pub import tl
 
-def construct_bends(path, radius, striped=False):
+def construct_bends(path, radius):
     """given a path, produce bendspecs and new path"""
     newpath = []
     bendspecs = []
@@ -18,13 +18,16 @@ def construct_bends(path, radius, striped=False):
         newpath.append(path[1])
         return newpath, []
 
-    default_radius = radius
+    radius = path[0].radius
+
+    if radius is None:
+        raise Exception("IDK what radius to use!!")
 
     for before, seg, after in rai.triplets(path):
 
-        #radius = seg.radius or (radius if striped else default_radius)
-        # FIXME
-        radius = 5
+        if before.radius is not None:
+            # TODO propagate vs one-off
+            radius = before.radius
 
         bendspec = construct_bend(
             before.to, seg.to, after.to, radius)
@@ -117,8 +120,6 @@ def construct_bend(before, point, after, radius):
         point_turn_center,
         rai.polar(arg=angle_turn_end, mod=radius)
         )
-
-    print("AAA", point_enter, point_exit)
 
     return tl.BendSpec(
         angle_start=angle_turn_start,

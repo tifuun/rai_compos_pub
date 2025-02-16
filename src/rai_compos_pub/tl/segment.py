@@ -18,7 +18,10 @@ class Segment:
     and how to get there.
     """
     to: SegmentTarget
-    #radius: float | None  # at start of Segment
+
+    straight: rai.t.CompoType | None
+    bend: rai.t.CompoType | None
+    radius: float | None
     #do_bridges: bool | None
     #bridge_spacing: float | None
     #bridge_scramble: float | None
@@ -29,7 +32,9 @@ class Segment:
     def __init__(
             self,
             to: SegmentTarget,
-            #radius: float | None = None,
+            straight: rai.t.CompoType | None = None,
+            bend: rai.t.CompoType | None = None,
+            radius: float | None = None,
             #do_bridges: bool | None = None,
             #bridge_spacing: float | None = None,
             #bridge_scramble: float | None = None,
@@ -48,14 +53,15 @@ class Segment:
         #    bridge_length = bridge_length or clone_from.bridge_length
 
         self.to = to
+
+        self.straight = straight
+        self.bend = bend
         #if isinstance(to, pc.Point):
         #    self.to = to
         #else:
         #    self.to = pc.Point(*to)  # TODO
 
-        #FIXME
-        self.radius = 5
-        #self.radius = radius
+        self.radius = radius
         #self.do_bridges = do_bridges
         #self.bridge_spacing = bridge_spacing
         #self.bridge_scramble = bridge_scramble

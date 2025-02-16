@@ -183,10 +183,17 @@ class TLTest(rai.Compo):
         # usually an absolutely insane way of writing Python code.
         # This is just for experimentation purposes tho.
 
-        Straight = CPWStraight.partial(
+        StraightA = CPWStraight.partial(
             signal_width=1,
             gap_width=1,
             gnd_width=1,
+            resist_margin=2,
+            )
+
+        StraightB = CPWStraight.partial(
+            signal_width=2,
+            gap_width=2,
+            gnd_width=2,
             resist_margin=2,
             )
 
@@ -198,23 +205,45 @@ class TLTest(rai.Compo):
             )
 
         path = (
-            tl.StartAt((-10, -10)),
-            tl.StraightTo((10, 10)),
+            tl.StartAt(
+                (-10, -10),
+                straight=StraightA,
+                bend=Bend,
+                radius=20
+                ),
+            tl.StraightTo(
+                (10, 10),
+                radius=5
+                ),
             tl.StraightTo((30, 10)),
             tl.StraightTo((50, -10)),
             tl.StraightTo((50, 20)),
             tl.StraightTo((0, 22)),
-            tl.StraightTo((60, 40)),
+            tl.StraightTo(
+                (60, 40),
+                straight=StraightB
+                ),
             tl.StraightTo((60, 0))
             )
 
+        #path = (
+        #    tl.StartAt((-10, -10)),
+        #    tl.StraightTo((10, 10)),
+        #    tl.StraightTo((30, 10)),
+        #    tl.StraightTo((50, -10)),
+        #    tl.StraightTo((50, 20)),
+        #    tl.StraightTo((0, 22)),
+        #    tl.StraightTo((60, 40)),
+        #    tl.StraightTo((60, 0))
+        #    )
+
         my_tl = TL(path=path)
-        my_tl.straight_compo = Straight
+        my_tl.straight_compo = StraightA
         my_tl.bend_compo = Bend
 
         my_tl.make_specs()
 
-        my_tl.make_straights(Straight)
+        my_tl.make_straights(StraightA)
         my_tl.make_bends(Bend)
 
         self.subcompos.extend(my_tl.straights_)
