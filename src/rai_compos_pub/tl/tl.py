@@ -15,6 +15,51 @@ class log:
     def debug(test, *fmt):
         print(test % fmt, file=stderr)
 
+from copy import copy
+class BetterPartial:
+    """
+    BetterPartial -- rai.Partial with optionmap
+
+    This is an improved version of the standard rai.Partial
+    that also allows renaming options.
+    So if the caller passes an option called `l`,
+    but the compo expects it to be called `length`,
+    you can use BetterPartial to resolve that.
+    """
+
+    compo_cls: 'rai.typing.CompoType'
+
+    class Mapped(str):
+        pass
+
+    def __init__(
+            self,
+            compo_cls: 'rai.typing.CompoType',
+            **kwargs
+            ) -> None:
+
+        self.compo_cls = compo_cls
+        self.optmap = {}  # caller name -> callee name
+        self.kwargs = {}
+
+        for key, val in kwargs.items():
+            if isinstance(val, self.Mapped):
+                self.optmap[str(val)] = key
+            else:
+                self.kwargs[key] = val
+
+    def __call__(self, **kwargs) -> 'rai.typing.Compo':
+        """Finish creating the partially created Compo."""
+
+        mapped_kwargs = {
+            self.optmap.get(key, key) : val
+            for key, val in kwargs.items()
+            }
+        kwargs2 = copy(self.kwargs)
+        kwargs2.update(mapped_kwargs)
+        return self.compo_cls(**kwargs2)
+
+
 class TL():
 
     path: tuple[tl.Segment]
@@ -151,10 +196,9 @@ class TL():
         self._resolved_path = path4
         # TODO type for path
 
-    def make_bends(self, bend_compo):
+    def make_bends(self):
         self.bends_ = tl.make_bend_components(
             self.bendspecs_,
-            bend_compo
             )
         return self.bends_
 
@@ -196,12 +240,33 @@ class TLTest(rai.Compo):
             resist_margin=2,
             )
 
+        #FIXME
+        from rai_compos_pub.vialess_msl import CPWTaperMetal
+        #TaperAB = CPWTaperMetal.partial(
+        TaperAB = BetterPartial(CPWTaperMetal,
+            l=BetterPartial.Mapped('length'),
+            sl=1,
+            sr=2,
+            wl1=1,
+            gl1=1,
+            wr1=2,
+            gr1=2,
+            )
+
         Bend = CPWBend.partial(
             signal_width=1,
             gap_width=1,
             gnd_width=1,
             resist_margin=2,
             )
+
+        BendB = CPWBend.partial(
+            signal_width=2,
+            gap_width=2,
+            gnd_width=2,
+            resist_margin=2,
+            )
+
 
         path = (
             tl.StartAt(
@@ -219,10 +284,12 @@ class TLTest(rai.Compo):
             tl.StraightTo((50, 20)),
             tl.StraightTo(
                 (0, 22),
-                straight=StraightB
+                straight=TaperAB,
+                bend=BendB
                 ),
             tl.StraightTo(
-                (60, 40)
+                (60, 40),
+                straight=StraightB
                 ),
             tl.StraightTo((60, 0))
             )
@@ -239,13 +306,11 @@ class TLTest(rai.Compo):
         #    )
 
         my_tl = TL(path=path)
-        my_tl.straight_compo = StraightA
-        my_tl.bend_compo = Bend
 
         my_tl.make_specs()
 
         my_tl.make_straights()
-        my_tl.make_bends(Bend)
+        my_tl.make_bends()
 
         self.subcompos.extend(my_tl.straights_)
         self.subcompos.extend(my_tl.bends_)

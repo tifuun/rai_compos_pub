@@ -8,7 +8,6 @@ import raimad as rai
 from rai_compos_pub import tl
 
 def construct_bends(path, radius):
-    """given a path, produce bendspecs and new path"""
     newpath = []
     bendspecs = []
 
@@ -23,14 +22,24 @@ def construct_bends(path, radius):
     if radius is None:
         raise Exception("IDK what radius to use!!")
 
+    # FIXME line below not needed?
+    compo = path[0].straight
+    if compo is None:
+        raise Exception("IDK what compo to use!!")
+
+
     for before, seg, after in rai.triplets(path):
 
         if before.radius is not None:
             # TODO propagate vs one-off
             radius = before.radius
 
+        if before.bend:
+            # TODO propagate vs one-off
+            compo = before.bend
+
         bendspec = construct_bend(
-            before.to, seg.to, after.to, radius)
+            before.to, seg.to, after.to, radius, compo)
 
         if bendspec is None:
             newpath.append(seg)
@@ -55,7 +64,7 @@ def construct_bends(path, radius):
     newpath.append(after)
     return newpath, bendspecs
 
-def construct_bend(before, point, after, radius):
+def construct_bend(before, point, after, radius, compo):
     angle_incoming = rai.angle_between(before, point)# % rai.fullcircle
     angle_outgoing = rai.angle_between(point, after)# % rai.fullcircle
 
@@ -128,6 +137,7 @@ def construct_bend(before, point, after, radius):
         point_enter=point_enter,
         point_exit=point_exit,
         point_center=point_turn_center,
+        compo=compo,
         )
 
 def make_bend_component(spec: tl.BendSpec, Compo: rai.t.CompoType):
@@ -155,10 +165,9 @@ def make_bend_component(spec: tl.BendSpec, Compo: rai.t.CompoType):
 
 def make_bend_components(
         specs: Iterable[tl.BendSpec],
-        Compo: rai.t.CompoType
         ):
     return [
-        make_bend_component(spec, Compo)
+        make_bend_component(spec, spec.compo)
         for spec in specs
         ]
 

@@ -30,7 +30,7 @@ class BendSpec:
     point_exit: rai.t.Point
     point_center: rai.t.Point
 
-    #compo: rai.t.CompoType
+    compo: rai.t.CompoType
 
 @dataclass
 class StraightSpec:
