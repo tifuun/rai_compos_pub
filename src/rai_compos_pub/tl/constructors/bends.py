@@ -7,7 +7,7 @@ import raimad as rai
 
 from rai_compos_pub import tl
 
-def construct_bends(path, radius):
+def construct_bends(path):
     newpath = []
     bendspecs = []
 

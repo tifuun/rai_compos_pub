@@ -25,12 +25,6 @@ def resolve_elbows(path):
 
 
 def resolve_elbow(before: rai.t.Point, elbow: tl.ElbowTo):
-    """
-    Convert single TL ElbowTo segment into three instances of tl.StraightTo
-    ( or once instance if directly up or down)
-    # FIXME this docstring makes no sense!!
-    Expects POINTS!
-    """
     if before[0] == elbow.to[0] or before[1] == elbow.to[1]:
         return [
             tl.StraightTo(elbow.to),

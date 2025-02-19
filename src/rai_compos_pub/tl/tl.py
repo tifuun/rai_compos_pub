@@ -74,10 +74,6 @@ class TL():
 
     def __init__(self, path):
         self.path = path
-        self.straight_compo = None
-
-        # FIXME this
-        self.bend_radius=5
 
         self.straights_ = []
         self.bends_ = []
@@ -173,10 +169,7 @@ class TL():
         #log.debug('====== Step 2: reduce straights ======')
         #log.debug(format_path(path2))
 
-        path3, self.bendspecs_ = tl.construct_bends(
-            path2,
-            radius=self.bend_radius,
-            )
+        path3, self.bendspecs_ = tl.construct_bends(path2)
         log.debug('====== Step 3: construct bends ======')
         log.debug(tl.format_path(path3))
 

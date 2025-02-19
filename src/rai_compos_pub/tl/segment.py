@@ -21,7 +21,9 @@ class Segment:
 
     straight: rai.t.CompoType | None
     bend: rai.t.CompoType | None
+
     radius: float | None
+
     #do_bridges: bool | None
     #bridge_spacing: float | None
     #bridge_scramble: float | None
