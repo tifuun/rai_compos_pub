@@ -1,0 +1,129 @@
+from math import radians
+
+import raimad as rai
+
+class CPWLayers:
+    resist = rai.Layer('Resist layer above signal line')
+    insl = rai.Layer('Insulator between CPW and bridge')
+    bridge = rai.Layer('Conducting part of bridge')
+    conductor = rai.Layer('Conducting layer for signal and ground lines')
+
+class CPWStraight_Simple(rai.Compo):
+    class Layers(CPWLayers):
+        pass
+
+    class Options:
+        length = rai.Option.Geometric(
+            "length of segment",
+            browser_default=10
+            )
+        signal_width = rai.Option.Geometric(
+            "width of signal line",
+            browser_default=3
+            )
+        gap_width = rai.Option.Geometric(
+            "width of gaps between signal line and gnd lines",
+            browser_default=1
+            )
+
+    class Marks:
+        tl_enter = rai.Mark("Start of CPW straight segment")
+        tl_exit = rai.Mark("End of CPW straight segment")
+
+    def _make(
+            self,
+            length: float,
+            signal_width: float,
+            gap_width: float,
+            ):
+
+        signal = rai.RectLW(length, signal_width).proxy().map('conductor')
+        gnd1 = rai.RectLW(length, gap_width).proxy().map('conductor')
+        gnd2 = gnd1.proxy()
+
+        # gnd1 goes above signal
+        gnd1.snap_above(signal)
+
+        # gnd2 goes below signal
+        gnd2.snap_below(signal)
+        
+        # Register subcompos
+        self.subcompos.gnd1 = gnd1
+        self.subcompos.gnd2 = gnd2
+
+        # Register marks
+        self.marks.tl_enter = signal.bbox.mid_left
+        self.marks.tl_exit = signal.bbox.mid_right
+
+class CPWBend_Simple(rai.Compo):
+    class Layers(CPWLayers):
+        pass
+
+    class Options:
+        signal_width = rai.Option.Geometric(
+            "width of signal line",
+            browser_default=3
+            )
+        gap_width = rai.Option.Geometric(
+            "width of gaps between signal line and gnd lines",
+            browser_default=1
+            )
+        bend_radius = rai.Option.Geometric(
+            "Radius from bend center to middle of signal line",
+            browser_default=10
+            )
+        dtheta = rai.Option.Geometric(
+            "Arc length of bend (radians)",
+            browser_default=radians(45)
+            )
+
+    class Marks:
+        center = rai.Mark("Center of the bend")
+        tl_enter = rai.Mark("Start of CPW segment")
+        tl_exit = rai.Mark("End of CPW segment")
+
+    def _make(
+            self,
+            signal_width: float,
+            gap_width: float,
+            bend_radius: float,
+            dtheta: float,
+            ):
+
+        # Inner (closest to center) GND line
+        inner = rai.AnSec.from_auto(
+            r2=bend_radius - signal_width / 2,
+            dr=gap_width,
+            theta1=0,
+            dtheta=dtheta,
+            ).proxy().map('conductor')
+
+        # Signal line
+        signal = rai.AnSec.from_auto(
+            rmid=bend_radius,
+            dr=signal_width,
+            theta1=0,
+            dtheta=dtheta,
+            ).proxy().map('conductor')
+
+        # Outter (furthest from center) GND line
+        outter = rai.AnSec.from_auto(
+            r1=bend_radius + signal_width / 2,
+            dr=gap_width,
+            theta1=0,
+            dtheta=dtheta,
+            ).proxy().map('conductor')
+
+
+        # Register subcompos
+        self.subcompos.inner = inner
+        self.subcompos.outter = outter
+        # self.subcompos.signal = signal
+
+        # Register marks
+        # TODO ansec marks??
+        # YES definitely TODO ansec marks!
+        self.marks.center = (0, 0)
+        self.marks.tl_enter = (bend_radius, 0)
+        self.marks.tl_exit = rai.polar(arg=dtheta, mod=bend_radius)
+
