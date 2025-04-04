@@ -77,8 +77,8 @@ class Vernier_marker(rai.Compo):
         ### Label
         if labels == True:
             
-            label_scale_1 = self.bbox.width / RAItext(layer_list[0]).proxy().bbox.length * 0.6
-            label_scale_2 = self.bbox.width / RAItext(layer_list[1]).proxy().bbox.length * 0.6
+            label_scale_1 = self.bbox.width / RAIText(layer_list[0]).proxy().bbox.length * 0.6
+            label_scale_2 = self.bbox.width / RAIText(layer_list[1]).proxy().bbox.length * 0.6
     
             Label_1 = RAIText(layer_list[0], scale = label_scale_1).proxy().rotate(np.pi/2)
             Label_2 = RAIText(layer_list[1], scale = label_scale_2).proxy().rotate(-np.pi/2)
