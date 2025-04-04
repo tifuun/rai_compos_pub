@@ -18,6 +18,9 @@ from rai_compos_pub.ppc_kid import PPCKID_Assembly
 
 from rai_compos_pub.raitext import RAIText
 
+from rai_compos_pub.vernier import Ruler_marker
+from rai_compos_pub.vernier import Vernier_marker
+
 from rai_compos_pub.tl.tl import TLTest
 
 from rai_compos_pub.vialess_msl import MSLHalf
