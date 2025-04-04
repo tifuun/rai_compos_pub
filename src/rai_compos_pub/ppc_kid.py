@@ -2,6 +2,7 @@
 # coding: utf-8
 
 # In[ ]:
+import raimad as rai
 
 
 class PPCKID_Layers:
