@@ -100,7 +100,7 @@ class Vernier_marker_ebeam(rai.Compo):
              layer_list: list = ['layer1','layer2'],
              ):
 
-        Vernier_1 = Vernier(layer_list = layer_list,labels = True).proxy()
+        Vernier_1 = Vernier_marker(layer_list = layer_list,labels = True).proxy()
         Vernier_2 = Vernier_1.proxy().rotate(np.pi/2).snap_above(Vernier_1).movey(5)
         
         self.subcompos['Vernier_1'] = Vernier_1
