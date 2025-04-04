@@ -7,6 +7,9 @@ from rai_compos_pub.cpw import CPWLayers
 from rai_compos_pub.cpw import CPWStraight
 from rai_compos_pub.cpw import CPWBend
 
+from rai_compos_pub.cpw_simple import CPWStraight_Simple
+from rai_compos_pub.cpw_simple import CPWBend_Simple
+
 from rai_compos_pub.tl.tl import TLTest
 
 from rai_compos_pub.vialess_msl import MSLHalf
