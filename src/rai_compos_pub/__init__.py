@@ -16,7 +16,7 @@ from rai_compos_pub.ppc_kid import PPCKID_Meander
 from rai_compos_pub.ppc_kid import PPCKID_Connector
 from rai_compos_pub.ppc_kid import PPCKID_Assembly
 
-from rai_compos_pub.raitext import RAItext
+from rai_compos_pub.raitext import RAIText
 
 from rai_compos_pub.tl.tl import TLTest
 
