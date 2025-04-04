@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[11]:
 
 
 """
@@ -11,7 +11,7 @@ raitext.py: Home to the RAItext component with its symbol library
 
 import raimad as rai
 
-class RAItext(rai.Compo):
+class RAIText(rai.Compo):
     """ 
     Generate 2D polygons of symbols.
     
@@ -23,8 +23,17 @@ class RAItext(rai.Compo):
     Inspired by the KLayout font
     
     """
+    class Options:
+        string = rai.Option.Functional(
+            "Text displayed by the function", 
+            browser_default = "RAIText"
+        )
+        scale = rai.Option.Geometric(
+            "Size scaling of the text",
+            browser_default = 10
+        )
     
-    def _make(self, string: str = "RAItext", scale: float = 1):
+    def _make(self, string: str = "RAIText", scale: float = 1):
         symbols_dict= {}
 
         """ Capitalized letters as Polygons """
