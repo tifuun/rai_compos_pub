@@ -112,7 +112,7 @@ class PPCKID_Inductor_Coupler(rai.Compo):
         self.marks.left_line_end = self.subcompos.left_line.bbox.bot_mid
         self.marks.right_line_end = self.subcompos.right_line.bbox.bot_mid
 
-class PPCKID_Inductor_Meander(rai.Compo):
+class PPCKID_Meander(rai.Compo):
     """
     A rudimentary ruler shape
     """
