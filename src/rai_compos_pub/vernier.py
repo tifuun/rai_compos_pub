@@ -3,8 +3,10 @@
 
 # In[ ]:
 
-
 import raimad as rai
+import numpy as np
+
+from rai_compos_pub import RAIText
 
 class Ruler_marker(rai.Compo):
     """
@@ -60,8 +62,8 @@ class Vernier_marker(rai.Compo):
               delta_pitch: float = 0.005,
               bar_length: float = 1.2,
               number_of_bars: int = 41,
-              layer_list: list = ["Vernier_1","Vernier_2"],
-              labels: bool = True
+              layer_list: list = ["layer 1","layer 2"],
+              labels: bool = False,
              ):
         
         height = pitch/2
@@ -76,7 +78,7 @@ class Vernier_marker(rai.Compo):
         
         ### Label
         if labels == True:
-            
+                        
             label_scale_1 = self.bbox.width / RAIText(layer_list[0]).proxy().bbox.length * 0.6
             label_scale_2 = self.bbox.width / RAIText(layer_list[1]).proxy().bbox.length * 0.6
     
