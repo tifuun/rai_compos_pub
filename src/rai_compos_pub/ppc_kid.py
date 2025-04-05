@@ -208,7 +208,7 @@ class PPCKID_Connector(rai.Compo):
         self.marks.connect_top = self.subcompos.vertical_line.bbox.top_mid
         self.marks.connect_side = self.subcompos.horizontal_line.bbox.mid_right
 
-class PPCKID_Assembly(rai.Compo):
+class PPCKID(rai.Compo):
     """
     A rudimentary ruler shape
     """
