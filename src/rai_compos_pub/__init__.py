@@ -14,7 +14,7 @@ from rai_compos_pub.ppc_kid import PPCKID_Layers
 from rai_compos_pub.ppc_kid import PPCKID_Inductor_Coupler
 from rai_compos_pub.ppc_kid import PPCKID_Meander
 from rai_compos_pub.ppc_kid import PPCKID_Connector
-from rai_compos_pub.ppc_kid import PPCKID_Assembly
+from rai_compos_pub.ppc_kid import PPCKID
 
 from rai_compos_pub.raitext import RAIText
 
