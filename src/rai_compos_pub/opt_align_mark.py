@@ -1,10 +1,11 @@
 import raimad as rai
 import numpy as np
+from rai_compos_pub import RAIText
 
 ### Optical allignment marker
 
 #### Large marker
-class Optical_allignment_marker_large(rai.Compo):
+class Opt_align_large_mark(rai.Compo):
     def _make(self,
               height: int = 390/2, #bar height
               width: int = 108, # default bar width
@@ -44,7 +45,7 @@ class Optical_allignment_marker_large(rai.Compo):
 
 #### Minor marker
 
-class opt_allignment_marker_small(rai.Compo):
+class Opt_align_mark_minor(rai.Compo):
     """
     Requires: [RAIMAD]
     """
@@ -99,11 +100,9 @@ class opt_allignment_marker_small(rai.Compo):
         self.marks.max_X = (outer_box_size[1]+gap_outer/2,0)
         self.marks.max_Y = (0,2*inner_box_size[1]+outer_box_size[1])
 
-opt_allignment_marker_small().proxy().scale(2)
-
 #### Assembly minor and major
 
-class Assemble_main_opt_alignment_marker(rai.Compo):
+class Opt_align_major_assembly(rai.Compo):
     """
     Requires [pycif,pc_text]
     """        
@@ -111,7 +110,7 @@ class Assemble_main_opt_alignment_marker(rai.Compo):
              layer_list = ['layer01','layer02']
              ):   
         "Object creation and manipulation"
-        object = Optical_allignment_marker_large(
+        object = Opt_align_large_mark(
             height = 390/2,
             width = 108,
             gap = 40,
@@ -129,7 +128,7 @@ class Assemble_main_opt_alignment_marker(rai.Compo):
         self.subcompos['West'] = North.proxy().rotate(-np.pi/2)
         self.subcompos['South'] = North.proxy().rotate(np.pi)
 
-class Assemble_minor_opt_alignment_marker(rai.Compo):
+class Opt_align_minor_assembly(rai.Compo):
     """
     Requires [pycif,pc_text]
     """
@@ -137,7 +136,7 @@ class Assemble_minor_opt_alignment_marker(rai.Compo):
     def _make(self,
              layer_list = ['layer1','layer2']):
         "Object creation and manipulation"
-        object = opt_allignment_marker_small(
+        object = Opt_align_mark_minor(
             inner_box_size =(8,16),
             outer_box_size =(15,26),
             gap_inner =4,
@@ -156,7 +155,7 @@ class Assemble_minor_opt_alignment_marker(rai.Compo):
         self.subcompos['circle'] = rai.Circle(2).proxy().map('layer2') #This is for the development stage as it shows the origin
 
 #### Full marker assembly
-class Full_assembly_optical_marker(rai.Compo):
+class Opt_align_mark(rai.Compo):
     """ 
     
     Dependencies; RAIText
@@ -167,11 +166,11 @@ class Full_assembly_optical_marker(rai.Compo):
              label = '1',
              ):
         "Object creation and manipulation"
-        main_alligner = Assemble_main_opt_alignment_marker(
+        main_alligner = Opt_align_major_assembly(
             layer_list = layer_list,
         )
 
-        minor_alligner = Assemble_minor_opt_alignment_marker().proxy().move(-140,210)
+        minor_alligner = Opt_align_minor_assembly().proxy().move(-140,210)
 
         label_1  = RAIText(label).proxy().scale(4).bbox.mid.to((700,700)).map(layer_list[0])
         label_2 = label_1.proxy()
@@ -186,7 +185,3 @@ class Full_assembly_optical_marker(rai.Compo):
         "Placing the labels"
         self.subcompos['label_1'] = label_1
         self.subcompos['label_2'] = label_1.proxy().map(layer_list[1])
-
-
-
-
