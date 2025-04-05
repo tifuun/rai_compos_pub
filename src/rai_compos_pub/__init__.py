@@ -29,6 +29,8 @@ from rai_compos_pub.opt_align_mark import Opt_align_minor_assembly
 from rai_compos_pub.opt_align_mark import Opt_align_mark_minor
 from rai_compos_pub.opt_align_mark import Opt_align_mark
 
+from rai_compos_pub.logo import Logo
+
 from rai_compos_pub.tl.tl import TLTest
 
 from rai_compos_pub.vialess_msl import MSLHalf
