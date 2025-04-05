@@ -22,6 +22,12 @@ from rai_compos_pub.vernier import Ruler_marker
 from rai_compos_pub.vernier import Vernier_marker
 from rai_compos_pub.vernier import Vernier_marker_ebeam
 
+from rai_compos_pub.opt_align_mark import Opt_align_large_mark
+from rai_compos_pub.opt_align_mark import Opt_align_mark_minor
+from rai_compos_pub.opt_align_mark import Opt_align_major_assembly
+from rai_compos_pub.opt_align_mark import Opt_align_minor_assembly
+from rai_compos_pub.opt_align_mark import Opt_align_mark_minor
+from rai_compos_pub.opt_align_mark import Opt_align_mark
 
 from rai_compos_pub.tl.tl import TLTest
 
