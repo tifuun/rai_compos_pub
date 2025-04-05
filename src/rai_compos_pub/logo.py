@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
 
 """
 Genrator that builds components representing Logo's. These are added manually.
