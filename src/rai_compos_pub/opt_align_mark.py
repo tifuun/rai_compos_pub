@@ -157,8 +157,8 @@ class Opt_align_minor_assembly(rai.Compo):
 #### Full marker assembly
 class Opt_align_mark(rai.Compo):
     """ 
-    
-    Dependencies; RAIText
+    Standard marker used during optical alignment using mask alligner.
+    The patern has a standard shape
     """
             
     def _make(self,
@@ -166,13 +166,11 @@ class Opt_align_mark(rai.Compo):
              label = '1',
              ):
         "Object creation and manipulation"
-        main_alligner = Opt_align_major_assembly(
-            layer_list = layer_list,
-        )
+        main_alligner = Opt_align_major_assembly(layer_list = layer_list).proxy().scale(0.1)
 
-        minor_alligner = Opt_align_minor_assembly().proxy().move(-140,210)
+        minor_alligner = Opt_align_minor_assembly().proxy().scale(0.1).move(-14,21)
 
-        label_1  = RAIText(label).proxy().scale(4).bbox.mid.to((700,700)).map(layer_list[0])
+        label_1  = RAIText(label).proxy().scale(0.4).bbox.mid.to((70,70)).map(layer_list[0])
         label_2 = label_1.proxy()
         
         "Placing the objects"
@@ -185,3 +183,5 @@ class Opt_align_mark(rai.Compo):
         "Placing the labels"
         self.subcompos['label_1'] = label_1
         self.subcompos['label_2'] = label_1.proxy().map(layer_list[1])
+
+        self.bbox.pad(5)
