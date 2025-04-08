@@ -167,7 +167,7 @@ class Opt_align_mark(rai.Compo):
         "Object creation and manipulation"
         main_alligner = Opt_align_major_assembly(layer_list = layer_list).proxy().scale(0.1)
 
-        minor_alligner = Opt_align_minor_assembly().proxy().scale(0.1).move(-14,21)
+        minor_alligner = Opt_align_minor_assembly(layer_list = layer_list).proxy().scale(0.1).move(-14,21)
 
         label_1  = RAIText(label).proxy().scale(0.4).bbox.mid.to((70,70)).map(layer_list[0])
         label_2 = label_1.proxy()
