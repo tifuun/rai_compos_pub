@@ -37,3 +37,4 @@ from rai_compos_pub.vialess_msl import MSLHalf
 from rai_compos_pub.vialess_msl import MSLHalves
 from rai_compos_pub.vialess_msl import VialessMSL
 
+from rai_compos_pub.wafer import Wafer 
