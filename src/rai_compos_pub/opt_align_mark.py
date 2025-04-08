@@ -107,7 +107,7 @@ class Opt_align_major_assembly(rai.Compo):
     Requires [pycif,pc_text]
     """        
     def _make(self,
-             layer_list = ['layer01','layer02']
+             layer_list = ['layer1','layer2']
              ):   
         "Object creation and manipulation"
         object = Opt_align_large_mark(
@@ -145,14 +145,13 @@ class Opt_align_minor_assembly(rai.Compo):
             circle_seperation = 10,
         ).proxy()
 
-        North = object.bbox.mid.to(object.bbox.top_mid)
+        North = object.bbox.mid.to(object.bbox.top_mid).map({"layer1":layer_list[0],"layer2":layer_list[1]})
 
         self.subcompos['North'] = North
         self.subcompos['East'] = North.proxy().rotate(np.pi/2)
         self.subcompos['West'] = North.proxy().rotate(-np.pi/2)
         self.subcompos['South'] = North.proxy().rotate(np.pi)
         
-        self.subcompos['circle'] = rai.Circle(2).proxy().map('layer2') #This is for the development stage as it shows the origin
 
 #### Full marker assembly
 class Opt_align_mark(rai.Compo):
@@ -184,4 +183,4 @@ class Opt_align_mark(rai.Compo):
         self.subcompos['label_1'] = label_1
         self.subcompos['label_2'] = label_1.proxy().map(layer_list[1])
 
-        self.bbox.pad(5)
+        self.bbox.pad(20)
