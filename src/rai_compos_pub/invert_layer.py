@@ -157,7 +157,7 @@ def find_left_bridge_point(inner_coords, outer_coords, tolerance=1e-5):
 
     return p_outer, p_inner
 
-def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = False):
+def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = True):
     """
     Outer shape should fully enclose the inner shape(s)
     The inner shape should not contain any other hole
