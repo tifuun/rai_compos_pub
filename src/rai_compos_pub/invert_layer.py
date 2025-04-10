@@ -157,7 +157,7 @@ def find_left_bridge_point(inner_coords, outer_coords, tolerance=1e-5):
 
     return p_outer, p_inner
 
-def connect_outer_and_inner(outer_coords, inner_coords):
+def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = False):
     """
     Outer shape should fully enclose the inner shape(s)
     The inner shape should not contain any other hole
@@ -177,11 +177,13 @@ def connect_outer_and_inner(outer_coords, inner_coords):
 
     # Walk around inner polygon from p2 in reverse
     inner_path = inner_coords[i2:] + inner_coords[1:i2+1]
+    if rev_inner == True:
+        inner_path.reverse()
 
     # Build final shape
     path = outer_path + [inner_path[0]] + inner_path + [outer_path[0]]
     return path
-
+    
 class Invert_Layer(rai.Compo):
     """
     Inverts one layer of a compo enclosed within another compo
