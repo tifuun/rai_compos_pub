@@ -243,7 +243,7 @@ class PPCKID_Assembly_v2(rai.Compo):
         self.subcompos.coupler = coupler.proxy().marks.left_line_end.to(self.subcompos.meander_L.marks.enter)
 
         ### GND layer
-        coup_gap = 2
+        coup_gap = 1.5
         GND_gap_bot = 3
         GND = rai.RectLW(coupler_width+2*(meander_width+3),coup_gap+coupler_height-line_width+meander_height+plate_height/2+yshift-line_width/2+GND_gap_bot).proxy()
         self.subcompos.GND = GND.bbox.top_mid.to(self.subcompos.coupler.bbox.top_mid).movey(coup_gap).map(junk_layer)
