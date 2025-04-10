@@ -1,9 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
+import raimad as rai
 import numpy as np
 
 from shapely import Polygon
@@ -192,17 +187,17 @@ class Invert_Layer(rai.Compo):
     Inverts one layer of a compo enclosed within another compo
     """
     def _make(self,
-              outer_compo: rai.Compo,
-              inner_compo: rai.Compo,
+              outer_compo: rai.Compo = rai.RectLW(10,10).proxy(),
+              inner_compo: rai.Compo = rai.Circle(2).proxy(),
               inner_layer: str = "root",
               outer_layer: str = "root",
              ):
         
         flat_outer_compo = outer_compo.steamroll()
-        layer_outer_poly = Union(flat_outer_compo[outer_layer])[0]
+        layer_outer_poly = union(flat_outer_compo[outer_layer])[0]
 
         flat_inner_compo = inner_compo.steamroll()
-        layer_inner_poly = Union(flat_inner_compo[inner_layer])[0]
+        layer_inner_poly = union(flat_inner_compo[inner_layer])[0]
 
         outer_path = close_ring(layer_outer_poly)
         inner_path = close_ring(layer_inner_poly)
