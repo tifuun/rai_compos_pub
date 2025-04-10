@@ -20,6 +20,7 @@ requires-python = ">=3.10"
 
 dependencies = [
 	"raimad",
- 	"numpy"
+ 	"numpy",
+  	"shapely",
 	]
 
