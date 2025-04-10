@@ -12,8 +12,6 @@ from rai_compos_pub.cpw_simple import CPWBend_Simple
 
 from rai_compos_pub.ppc_kid import PPCKID
 
-from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
-
 from rai_compos_pub.raitext import RAIText
 
 from rai_compos_pub.vernier import Ruler_marker
@@ -38,3 +36,5 @@ from rai_compos_pub.vialess_msl import VialessMSL
 from rai_compos_pub.wafer import Wafer 
 
 from rai_compos_pub.invert_layer import Invert_Layer
+
+from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
