@@ -10,11 +10,9 @@ from rai_compos_pub.cpw import CPWBend
 from rai_compos_pub.cpw_simple import CPWStraight_Simple
 from rai_compos_pub.cpw_simple import CPWBend_Simple
 
-from rai_compos_pub.ppc_kid import PPCKID_Layers
-from rai_compos_pub.ppc_kid import PPCKID_Inductor_Coupler
-from rai_compos_pub.ppc_kid import PPCKID_Meander
-from rai_compos_pub.ppc_kid import PPCKID_Connector
 from rai_compos_pub.ppc_kid import PPCKID
+
+from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
 
 from rai_compos_pub.raitext import RAIText
 
