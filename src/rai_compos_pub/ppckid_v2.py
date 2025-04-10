@@ -1,13 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import raimad as rai
 from rai_compos_pub.invert_layer import union, close_ring, connect_outer_and_inner
-from rai_compos_pub import Invert_Layer
-
 
 
 class PPCKID_Capacitor_v2(rai.Compo):
@@ -275,18 +267,4 @@ class PPCKID_Assembly_v2(rai.Compo):
         path = connect_outer_and_inner(outer_compo_poly[0], inner_compo_poly[0], rev_inner=False)
 
         self.subcompos.test = rai.CustomPoly(path).proxy().map('conductor')
-
-
-# In[5]:
-
-
-test = PPCKID_Assembly_v2(20)
-display(test.proxy().scale(10))
-rai.show(test)
-
-
-# In[ ]:
-
-
-
 
