@@ -200,7 +200,7 @@ class Logostring:
 
 class Logo(rai.Compo):
     def _make(self,
-             Logo = 'TIFUUN_icon'
+             Logo = 'TIFUUN'
              ):
 
         String_lib = Logostring.get(Logo)
