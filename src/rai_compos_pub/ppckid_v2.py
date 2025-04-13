@@ -179,7 +179,7 @@ class PPCKID_Assembly_v2(rai.Compo):
         junk_layer = 'z_junk'
 
         ### Input parameters
-        meander_width = (meander_width+line_width)/10
+        meander_width = meander_width/10
         coupler_distance = coupler_distance/10
         
         # Variables capacitor
