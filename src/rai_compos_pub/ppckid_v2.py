@@ -158,9 +158,13 @@ class PPCKID_Assembly_v2(rai.Compo):
     Parralel Place Capacitor KID used for measurement of dielectric materials
     """
     class Options:
-       meander_width = rai.Option.Geometric(
+        meander_width = rai.Option.Geometric(
             "height of the inductor stucture",
             browser_default=10
+            )
+        coupler_distance = rai.Option.Geometric(
+            "Distance between top op coupler and GND close to readoutline",
+            browser_default = 2
             )
 
     
@@ -168,12 +172,15 @@ class PPCKID_Assembly_v2(rai.Compo):
         coupler_center = rai.Mark('Center of the coupler structure')
     
     def _make(self,
-              meander_width: float = 10,
+              meander_width: float = 50,
+              coupler_distance: float = 20,
              ):
 
         junk_layer = 'z_junk'
 
         ### Input parameters
+        meander_width = meander_width/10
+        coupler_distance = coupler_distance/10
         
         # Variables capacitor
         plate_height = 13
@@ -243,7 +250,7 @@ class PPCKID_Assembly_v2(rai.Compo):
         self.subcompos.coupler = coupler.proxy().marks.left_line_end.to(self.subcompos.meander_L.marks.enter)
 
         ### GND layer
-        coup_gap = 1.5
+        coup_gap = coupler_distance
         GND_gap_bot = 3
         GND = rai.RectLW(coupler_width+2*(meander_width+3),coup_gap+coupler_height-line_width+meander_height+plate_height/2+yshift-line_width/2+GND_gap_bot).proxy()
         self.subcompos.GND = GND.bbox.top_mid.to(self.subcompos.coupler.bbox.top_mid).movey(coup_gap).map(junk_layer)
@@ -267,4 +274,3 @@ class PPCKID_Assembly_v2(rai.Compo):
         path = connect_outer_and_inner(outer_compo_poly[0], inner_compo_poly[0], rev_inner=False)
 
         self.subcompos.test = rai.CustomPoly(path).proxy().map('conductor')
-
