@@ -180,7 +180,7 @@ class PPCKID_Assembly_v2(rai.Compo):
 
         ### Input parameters
         line_width = 0.5
-        meander_width = (meander_width+line_width)/10
+        meander_width = meander_width/10 + line_width
         coupler_distance = coupler_distance/10
         
         # Variables capacitor
