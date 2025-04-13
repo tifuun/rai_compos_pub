@@ -179,6 +179,7 @@ class PPCKID_Assembly_v2(rai.Compo):
         junk_layer = 'z_junk'
 
         ### Input parameters
+        line_width = 0.5
         meander_width = (meander_width+line_width)/10
         coupler_distance = coupler_distance/10
         
@@ -192,7 +193,7 @@ class PPCKID_Assembly_v2(rai.Compo):
         capacitor_width = gap+2*plate_width
         
         # variables connector
-        line_width = 0.5
+        line_width = line_width
         connector_width = 2
 
         # Coupler variables
