@@ -173,7 +173,7 @@ class PPCKID_Assembly_v2(rai.Compo):
     
     def _make(self,
               meander_width: float = 50,
-              coupler_distance: float = 20,
+              coupler_distance: float = 15,
              ):
 
         junk_layer = 'z_junk'
