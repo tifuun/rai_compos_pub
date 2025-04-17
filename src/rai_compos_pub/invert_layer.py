@@ -183,14 +183,14 @@ def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = True):
     # Build final shape
     path = outer_path + [inner_path[0]] + inner_path + [outer_path[0]]
     return path
-    
+
 class Invert_Layer(rai.Compo):
     """
     Inverts one layer of a compo enclosed within another compo
     """
     def _make(self,
-              outer_compo: rai.Compo = rai.RectLW(10,10).proxy(),
-              inner_compo: rai.Compo = rai.Circle(2).proxy(),
+              outer_compo: rai.Compo =  rai.RectLW(10,10).proxy(),
+              inner_compos: rai.Compo = rai.Circle(3).proxy(),
               inner_layer: str = "root",
               outer_layer: str = "root",
              ):
@@ -198,12 +198,16 @@ class Invert_Layer(rai.Compo):
         flat_outer_compo = outer_compo.steamroll()
         layer_outer_poly = union(flat_outer_compo[outer_layer])[0]
 
-        flat_inner_compo = inner_compo.steamroll()
-        layer_inner_poly = union(flat_inner_compo[inner_layer])[0]
+        flat_inner_compos = inner_compos.steamroll()
+        layer_inner_poly = union(flat_inner_compos[inner_layer])
 
         outer_path = close_ring(layer_outer_poly)
         inner_path = close_ring(layer_inner_poly)
-        path = connect_outer_and_inner(outer_path, inner_path)
+
+        path = outer_path
+        for i, shape in enumerate(layer_inner_poly):
+            path = connect_outer_and_inner(path, inner_path[i])
         
         self.subcompos.inverted_union = rai.CustomPoly(path).proxy().map(inner_layer)
+
 
