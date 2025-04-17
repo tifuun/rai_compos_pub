@@ -2,6 +2,7 @@ import raimad as rai
 import numpy as np
 import math
 from rai_compos_pub import Invert_Layer
+from rai_compos_pub import RAIText
 
 class DC_chip_side(rai.Compo):
     def _make(self):
