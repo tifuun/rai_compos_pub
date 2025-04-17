@@ -108,7 +108,7 @@ class DC_chip(rai.Compo):
                      )
         
         ## Center region
-        center = Center_region_DC_chip().proxy().snap_right(Left_pads).movex(4.8)
+        center = DC_chip_center_region().proxy().snap_right(Left_pads).movex(4.8)
         
         ## create subcompos
         self.subcompos.pads_L = Left_pads.proxy()
