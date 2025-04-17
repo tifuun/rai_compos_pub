@@ -87,6 +87,51 @@ class DC_chip_pads_inverse(rai.Compo):
         self.marks.connect_h = split.marks.connect_h
         self.marks.snap_side = split.marks.snap_side
 
+class DC_chip_side_monolayer(rai.Compo):
+    def _make(self):
+        ## create pads
+        contact_pad = rai.RectLW(52,77).proxy()
+        top_arm = rai.RectLW(90, 11.2).proxy()
+        bottom_arm = rai.RectLW(91.9, 5).proxy()
+        arm_up = rai.RectLW(3.8, 67.8).proxy()
+        arm_up_tip = rai.RectLW(1,6).proxy()
+        bridge = rai.RectLW(190,10).proxy()
+
+        ## create pads
+        self.subcompos.pad_TL = contact_pad.proxy()
+        self.subcompos.pad_BL = contact_pad.proxy().snap_below(self.subcompos.pad_TL).movey(-3)
+        self.subcompos.arm_T = top_arm.proxy().bbox.top_left.to(self.subcompos.pad_TL.bbox.top_left)
+        self.subcompos.arm_B1 = bottom_arm.proxy().bbox.top_left.to(self.subcompos.pad_BL.bbox.top_left)
+        self.subcompos.arm_B2 = arm_up.proxy().bbox.bot_right.to(self.subcompos.arm_B1.bbox.bot_right)
+        self.subcompos.arm_B3 = arm_up_tip.proxy().bbox.bot_mid.to(self.subcompos.arm_B2.bbox.top_mid)
+
+        self.subcompos.bridge = bridge.proxy().bbox.bot_left.to(self.subcompos.arm_T.bbox.bot_left)
+
+        ## Marks
+        self.marks.snap_side = self.bbox.mid_right
+
+class DC_chip_monolayer(rai.Compo):
+    def _make(self,
+             inverse_pads: bool = True
+             ):
+        ## Contact pads
+        if inverse_pads == True:
+            split = DC_chip_side_monolayer().proxy()
+            Outer_square = rai.RectLW(split.bbox.length+2.5,split.bbox.width+5).proxy().bbox.mid.to(split.bbox.mid).movex(-1.25)
+            Left_pads = Invert_Layer(Outer_square,split, rev_inner= False).proxy().map('pads')
+        
+        else:
+            Left_pads = DC_chip_side_monolayer().proxy().map('pads')
+            
+        Right_pads = (Left_pads.proxy()
+                      .vflip()
+                      .movex(328)
+                     )
+        
+        ## create subcompos
+        self.subcompos.pads_L = Left_pads.proxy()
+        self.subcompos.pads_R = Right_pads.proxy()
+
 class DC_chip(rai.Compo):
     """
     DC_chip used to measure resistance
