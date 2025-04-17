@@ -33,3 +33,5 @@ from rai_compos_pub.invert_layer import Invert_Layer
 from rai_compos_pub.ppc_kid import PPCKID
 
 from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
+
+from rai_compos_pub.dc_chip import DC_chip
