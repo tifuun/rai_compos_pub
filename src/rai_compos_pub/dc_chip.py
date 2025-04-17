@@ -135,11 +135,9 @@ class DC_chip_monolayer(rai.Compo):
         self.subcompos.pads_R = Right_pads.proxy()
 
 class DC_chip(rai.Compo):
-    """
-    DC_chip used to measure resistance
-    """
     def _make(self,
-             inverse_pads: bool = True
+              inverse_pads: bool = True,
+              bridge_width = .1,
              ):
         ## Contact pads
         if inverse_pads == True:
@@ -155,7 +153,7 @@ class DC_chip(rai.Compo):
                      )
         
         ## Center region
-        center = DC_chip_center_region().proxy().snap_right(Left_pads).movex(4.8)
+        center = Center_region_DC_chip(bridge_width).proxy().snap_right(Left_pads).movex(4.8)
         
         ## create subcompos
         self.subcompos.pads_L = Left_pads.proxy()
