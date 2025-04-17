@@ -207,7 +207,7 @@ class Invert_Layer(rai.Compo):
 
         path = outer_path
         for i, shape in enumerate(layer_inner_poly):
-            path = connect_outer_and_inner(outer_path, inner_path[i], rev_inner=rev_inner)
+            path = connect_outer_and_inner(path, inner_path[i], rev_inner=rev_inner)
         
         self.subcompos.inverted_union = rai.CustomPoly(path).proxy().map(inner_layer)
 
