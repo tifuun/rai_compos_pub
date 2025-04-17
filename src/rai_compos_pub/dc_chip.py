@@ -23,17 +23,19 @@ class DC_chip_side(rai.Compo):
         self.marks.snap_side = self.bbox.mid_right
 
 
-class DC_chip_center_region(rai.Compo):
-    def _make(self):
+class Center_region_DC_chip(rai.Compo):
+    def _make(self, 
+              bridge_width: float = 0.1
+             ):
 
         ## Bridge region
-        bridge_hor = rai.RectLW(26.5,0.1).proxy()
+        bridge_hor = rai.RectLW(26.5,bridge_width).proxy()
         bridge_step = rai.RectLW(8.5,1).proxy()
         ## Step gap
         margin = .25
         vertical_connect = margin + (bridge_step.bbox.width+bridge_hor.bbox.width)/2
 
-        bridge_ver = rai.RectLW(.1,vertical_connect)
+        bridge_ver = rai.RectLW(bridge_width,vertical_connect)
 
         ## Center regioin
         slab = rai.RectLW(20,13).proxy()
