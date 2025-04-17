@@ -77,7 +77,7 @@ class DC_chip_center_region(rai.Compo):
 
 class DC_chip_pads_inverse(rai.Compo):
     def _make(self):
-        split = Side_DC_chip().proxy()
+        split = DC_chip_side().proxy()
         Outer_square = rai.RectLW(split.bbox.length+5,split.bbox.width+5).proxy().bbox.mid.to(split.bbox.mid)
         GND = Invert_Layer(Outer_square,split, rev_inner= False)
         
@@ -98,7 +98,7 @@ class DC_chip(rai.Compo):
         if inverse_pads == True:
             Left_pads = DC_chip_pads_inverse().proxy().map('pads')
         else:
-            Left_pads = Side_DC_chip().proxy().map('pads')
+            Left_pads = DC_chip_side().proxy().map('pads')
             
         Right_pads = (Left_pads.proxy()
                       .vflip()
