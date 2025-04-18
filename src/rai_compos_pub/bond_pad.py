@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[8]:
-
-
 import raimad as rai
 
 class Bond_pad(rai.Compo):
@@ -47,18 +41,5 @@ class Bond_pad(rai.Compo):
         self.subcompos.bond_plate = pad.proxy().scale(1.05).map('bond_material')
 
         self.marks.connection_point = self.bbox.mid_right
-
-
-# In[9]:
-
-
-test = Bond_pad()
-display(test)
-rai.show(test)
-
-
-# In[ ]:
-
-
 
 
