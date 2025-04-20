@@ -18,3 +18,4 @@ from .constructors.bends import make_bend_components
 from .constructors.straights import construct_straights
 from .constructors.straights import make_straight_component
 from .constructors.straights import make_straight_components
+from .tl import TL
