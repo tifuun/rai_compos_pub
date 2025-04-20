@@ -1,5 +1,7 @@
 import raimad as rai
 
+from rai_compos_pub import CPWTaperMetal
+
 class Pgram(rai.Compo):
     r"""
     Parallelogram.
@@ -99,117 +101,6 @@ class CPWMetal(rai.Compo):
         # Register marks
         self.marks.tl_enter = signal.bbox.mid_left
         self.marks.tl_exit = signal.bbox.mid_right
-
-class CPWTaperMetal(rai.Compo):
-    """
-    Tapered CPW (positive image).
-    Adapted from cpw:CPWSegment
-
-            |----- l ------|
-                         __    _
-                     __--  |  |
-                 __--      |  |  gr1
-        _    __--        __|  |_
-    gl1  |  |      ___---     |  wr1
-        _|  |___---    ____   |_ 
-    wl1 _|   _____-----    |  |
-    sl   |  |              |  |
-        _|  |_____         |  |  sr
-    wl2 _|   ___  -----____|  |_
-    sl2  |  |   ---___        |  wr2
-        _|  |__       ---__   |_
-               --__        |  |
-                   --__    |  |  gr2
-                       --__|  |_
-    """
-    class Options:
-        l = rai.Option.Geometric(
-            "length of segment",
-            )
-        sl = rai.Option.Geometric(
-            "width of signal line on the left",
-            )
-        sr = rai.Option.Geometric(
-            "width of signal line on the right",
-            )
-
-        wl1 = rai.Option.Geometric(
-            "width of top gap on the left",
-            )
-        wr1 = rai.Option.Geometric(
-            "width of top gap on the right",
-            )
-        gl1 = rai.Option.Geometric(
-            "width of top ground line on the left",
-            )
-        gr1 = rai.Option.Geometric(
-            "width of top ground line on the right",
-            )
-
-        wl2 = rai.Option.Geometric(
-            "width of bottom gap on the left (None to use wl1)",
-            )
-        wr2 = rai.Option.Geometric(
-            "width of bottom gap on the right (None to use wr1)",
-            )
-        gl2 = rai.Option.Geometric(
-            "width of bottom ground line on the left (None to use gl1)",
-            )
-        gr2 = rai.Option.Geometric(
-            "width of bottom ground line on the right (None to use gr1)",
-            )
-
-    class Marks:
-        tl_enter = rai.Mark("Start of CPW segment")
-        tl_exit = rai.Mark("End of CPW segment")
-
-    def _make(
-            self,
-            l: float,
-            sl: float,
-            sr: float,
-            wl1: float,
-            wr1: float,
-            gl1: float,
-            gr1: float,
-            wl2: float | None = None,
-            wr2: float | None = None,
-            gl2: float | None = None,
-            gr2: float | None = None,
-            ):
-        
-        if wl2 is None: wl2 = wl1
-        if wr2 is None: wr2 = wr1
-        if gl2 is None: gl2 = gl1
-        if gr2 is None: gr2 = gr1
-
-        self.geoms.update({
-            'root': [
-                [  # Signal
-                    (0, sl / 2),
-                    (l, sr / 2),
-                    (l, - sr / 2),
-                    (0, - sl / 2),
-                    ],
-                [  # GND top
-                    (0, (sl / 2 + wl1) + gl1 ),
-                    (l, (sr / 2 + wr1) + gr1 ),
-                    (l, (sr / 2 + wr1)       ),
-                    (0, (sl / 2 + wl1)       ),
-                    ],
-                [  # GND bottom
-                    (0, - ( (sl / 2 + wl2) + gl2 )),
-                    (l, - ( (sr / 2 + wr2) + gr2 )),
-                    (l, - ( (sr / 2 + wr2)       )),
-                    (0, - ( (sl / 2 + wl2)       )),
-                    ],
-                ]
-            })
-
-        # Register marks
-        self.marks.tl_enter = (0, 0)
-        self.marks.tl_exit = (l, 0)
-
 
 class MSLHalf(rai.Compo):
     def _make(self):

@@ -234,7 +234,7 @@ class TLTest(rai.Compo):
             )
 
         #FIXME
-        from rai_compos_pub.vialess_msl import CPWTaperMetal
+        from rai_compos_pub import CPWTaperMetal
         #TaperAB = CPWTaperMetal.partial(
         TaperAB = BetterPartial(CPWTaperMetal,
             l=BetterPartial.Mapped('length'),

@@ -1,5 +1,22 @@
 """filter.py: contains MKID compo for toydeshima2"""
 
+
+class MKIDCPWCoup(rai.Compo):
+    def _make(self):
+        pass
+
+class MKIDCoup(rai.Compo):
+    def _make(self):
+        pass
+
+class MKIDFingers(rai.Compo):
+    def _make(self):
+        pass
+
+class MKIDLeek(rai.Compo):
+    def _make(self):
+        pass
+
 class MKID(rai.Compo):
     r"""
     Microwave Kinetic Inductance Detector for toydeshima2
