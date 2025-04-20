@@ -24,6 +24,8 @@ class GNDGap(rai.Compo):
                                         
     """
 
+    tags = ["toydeshima2", "example"]
+
     class Marks:
         gap_mid = rai.Mark("Middle of gap (whows as 'a' on the diagram)")
         gap_enter = rai.Mark("Top middle of gap (whows as 'b' on the diagram)")
@@ -104,6 +106,8 @@ class Filter(rai.Compo):
                        |-----| gap_l
                                           
     """
+
+    tags = ["toydeshima2", "example"]
 
     def _make(
             self,
