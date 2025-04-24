@@ -56,7 +56,7 @@ class LeakyAntenna(rai.Compo):
                          ,    +-------------+    ,   - 
                    _    ,     |  _       _  |     ,  | 
       butterfly_  |    ,      | | \_   _/ | |      , |  
-         length   |    ,      | |   \_/   | |      , | box_width
+         width    |    ,      | |   \_/   | |      , | box_width
                   |    ,      | |  _/ \_  | |      , |   
                   |_    ,     | |_/     \_| |     ,  | 
                          ,    |             |    ,   |    
@@ -83,6 +83,7 @@ class LeakyAntenna(rai.Compo):
         box_length = rai.Option("Length of box")
         box_width = rai.Option("Width of box")
         radius = rai.Option("Radius of island")
+        circle_compo = rai.Option("Use this component for the circle")
 
     def _make(
             self,
@@ -91,6 +92,7 @@ class LeakyAntenna(rai.Compo):
             box_length: float = 30,
             box_width: float = 30,
             radius: float = 40,
+            circle_compo: rai.t.CompoTypeLike = rai.Circle,
             ):
         bfly = LeakyButterfly(
                 length=butterfly_length,
@@ -102,7 +104,9 @@ class LeakyAntenna(rai.Compo):
                 box_width
                 ).proxy().map('diel')
 
-        circle = rai.Circle(radius).proxy().map('gnd')
+        circle = circle_compo(radius=radius).proxy().map('gnd')
+        #FIXME in raimad: Partial doesn't work with positional args
+        # Either make it work or say explicitly that only kwargs
 
         box.bbox.mid.to(bfly.marks.center)
         circle.bbox.mid.to(bfly.marks.center)

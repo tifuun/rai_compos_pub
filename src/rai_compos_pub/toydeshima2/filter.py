@@ -194,4 +194,12 @@ class Filter(rai.Compo):
         self.subcompos.corner_r = corner_r.map('metal')
         self.subcompos.gnd_bot = gnd_bot.map('gnd')
 
+        ### Register marks ###
+
+        self.marks.thz_connection = rai.add(
+            coup_top.bbox.mid, (0, gnd_top_pad))
+
+        self.marks.mkid_connection = line_right.bbox.bot_mid
+
+
 

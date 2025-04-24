@@ -232,11 +232,53 @@ class MKID(rai.Compo):
            |-|-|-| wl1, wl2, wl3       
 
     """
-    def _make(self):
-        leek = MKIDLeek().proxy()
-        fingers = MKIDFingers().proxy()
-        coup = MKIDCoup().proxy()
-        patch = MKIDPatch().proxy()
+    def _make(
+            self,
+            wp1: float = 20,
+            wp2: float = 20,
+            wp3: float = 30,
+            lpatch: float = 40,
+            lcoup: float = 40,
+            wcoup: float = 20,
+            lstub: float = 10,
+            wstub: float = 10,
+            lfinger1: float = 50,
+            lfinger2: float = 40,
+            wfinger: float = 10,
+            wfingers: float = 40,
+            l1: float = 100,
+            l2: float = 100,
+            ltaper: float = 40,
+            wl1: float = 10,
+            wl2: float = 10,
+            wl3: float = 10,
+            ):
+        leek = MKIDLeek(
+            l1=l1,
+            l2=l2,
+            ltaper=ltaper,
+            wl1=wl1,
+            wl2=wl2,
+            wl3=wl3,
+            ).proxy()
+        fingers = MKIDFingers(
+            lfinger1=lfinger1,
+            lfinger2=lfinger2,
+            wfinger=wfinger,
+            width=wfingers,
+            ).proxy()
+        coup = MKIDCoup(
+            length=lcoup,
+            width=wcoup,
+            lstub=lstub,
+            wstub=wstub,
+            ).proxy()
+        patch = MKIDPatch(
+            wp1=wp1,
+            wp2=wp2,
+            wp3=wp3,
+            lpatch=lpatch,
+            ).proxy()
 
         fingers.snap_above(leek)
         coup.snap_above(fingers)
@@ -246,3 +288,8 @@ class MKID(rai.Compo):
         self.subcompos.fingers = fingers
         self.subcompos.coup = coup
         self.subcompos.patch = patch
+
+        # TODO remove this introspection and instead make leek expose
+        # the mark
+        self.marks.filter_connection = leek.subcompos[0].marks.tl_enter
+        self.marks.readout_connection = patch.bbox.mid

@@ -30,7 +30,7 @@ def resolve_elbow(before: rai.t.Point, elbow: tl.ElbowTo):
             tl.StraightTo(elbow.to),
             ]
 
-    mid = rai.midpoint(_from, elbow.to)
+    mid = rai.midpoint(before, elbow.to)
     p1 = (mid[0], before[1])
     p2 = ([0], elbow.to[1])
     return (
