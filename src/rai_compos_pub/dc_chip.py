@@ -125,32 +125,47 @@ class DC_chip_monolayer(rai.Compo):
               bridge_width: float = 10,
               bridge_layer: str = 'bridge',
              ):
+
+        ## Label
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um'
+                 
         ## Contact pads
         if inverse_pads == True:
             split = DC_chip_side_monolayer(bridge_length, bridge_width).proxy()
-            Outer_square = rai.RectLW(split.bbox.length+2.5,split.bbox.width+5).proxy().bbox.mid.to(split.bbox.mid).movex(-1.25)
-            Left_pads = Invert_Layer(Outer_square,split, rev_inner= False).proxy().map('pads')
+            split_R = (split.proxy()
+                       .vflip()
+                       .snap_right(split)
+                       # .movex(328)
+                      )
+            label_compo = (RAIText(label).proxy().scale(2e-1)
+                           .bbox.mid.to(split.bbox.bot_right)
+                           .movey(20)
+                          )
+
+            rai.show(label_compo)
+            
+            Outer_square = rai.RectLW(2*split.bbox.length+5,split.bbox.width+5).proxy().bbox.mid.to(split.bbox.mid_right).movex(-1.25)
+            Left_pads = Invert_Layer(Outer_square,split, rev_inner= False).proxy()
+            All_pads = Invert_Layer(Left_pads,split_R, rev_inner= False).proxy()
+            Pads_and_text = Invert_Layer(All_pads,label_compo, rev_inner= False).proxy().map('pads')
+            self.subcompos.pads = Pads_and_text.proxy()
+            
         
         else:
             Left_pads = DC_chip_side_monolayer(bridge_length, bridge_width).proxy().map('pads')
+            Right_pads = (Left_pads.proxy()
+                          .vflip()
+                          .movex(328)
+                         )
+            label_compo = (RAIText(label).proxy().scale(2e-1)
+                           .bbox.mid.to(Left_pads.bbox.bot_right)
+                           .movey(20)
+                           .map('pads')
+                          )
+            self.subcompos.Left_pads = Left_pads.proxy()
+            self.subcompos.Right_pads = Right_pads.proxy()
+            self.subcompos.label = label_compo.proxy()
 
-        
-        Right_pads = (Left_pads.proxy()
-                      .vflip()
-                      .movex(328)
-                     )
-        
-        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um'
-        
-        ## create subcompos
-        self.subcompos.pads_L = Left_pads.proxy()
-        self.subcompos.pads_R = Right_pads.proxy()
-
-        self.subcompos.label = (RAIText(label).proxy().scale(2e-1)
-                                .bbox.mid.to(self.subcompos.pads_L.bbox.bot_right)
-                                .movey(20)
-                                .map('pads')
-                               )
 class DC_chip(rai.Compo):
     def _make(self,
               inverse_pads: bool = True,
