@@ -51,6 +51,8 @@ to make your component available in the root namespace of the package.
 
 ## Toy DESHIMA2.0
 
+![a picture of toydeshima2 chip in KLayout(img/toydeshima2.png)
+
 As a demonstration of RAIMAD features, we have made a
 "toy" version of the DESHIMA2.0 spectrometer chip.
 All of its components can be found under
