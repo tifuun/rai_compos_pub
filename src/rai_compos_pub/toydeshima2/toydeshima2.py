@@ -2,8 +2,11 @@
 
 import raimad as rai
 
+from rai_compos_pub import BetterPartial
 from rai_compos_pub import tl
-from rai_compos_pub import CPWStraight, CPWBend
+from rai_compos_pub import CPWStraight
+from rai_compos_pub import CPWBend
+from rai_compos_pub import CPWTaperMetal
 from rai_compos_pub.toydeshima2.util import get_kid_params
 from rai_compos_pub.toydeshima2.leaky_antenna import LeakyAntenna
 from rai_compos_pub.toydeshima2.filter import Filter
@@ -143,10 +146,7 @@ class ToyDESHIMA2(rai.Compo):
             tl.StraightTo(
                 bbox.interpolate(0.4, 0.2),
                 ),
-            tl.StraightTo(
-                (bbox.interpolate(0.4, 0.2)[0], bank.marks.thz_enter[1]),
-                ),
-            tl.StraightTo(
+            tl.ElbowTo(
                 bank.marks.thz_enter,
                 ),
             tl.StraightTo(
@@ -169,7 +169,31 @@ class ToyDESHIMA2(rai.Compo):
             )
 
         rout_straight = CPWStraight.partial(**rout_opts)
+        rout_straight_wide = CPWStraight.partial(
+            signal_width=10,
+            gap_width=4,
+            gnd_width=4,
+            resist_margin=4.5,
+            )
         rout_bend = CPWBend.partial(**rout_opts)
+        rout_taper_in = BetterPartial(CPWTaperMetal,
+            l=BetterPartial.Mapped('length'),
+            sl=10,
+            wl1=4,
+            gl1=4,
+            sr=rout_opts['signal_width'],
+            wr1=rout_opts['gap_width'],
+            gr1=rout_opts['gnd_width'],
+            )
+        rout_taper_out = BetterPartial(CPWTaperMetal,
+            l=BetterPartial.Mapped('length'),
+            sr=10,
+            wr1=4,
+            gr1=4,
+            sl=rout_opts['signal_width'],
+            wl1=rout_opts['gap_width'],
+            gl1=rout_opts['gnd_width'],
+            )
 
         fmkids = [
             fmkid
@@ -180,12 +204,27 @@ class ToyDESHIMA2(rai.Compo):
         tl_rout = tl.TL(path=(
             tl.StartAt(
                 bbox.interpolate(0.6, 0.95),
-                straight=rout_straight,
+                straight=rout_straight_wide,
                 bend=rout_bend,
                 radius=1,
                 ),
             tl.StraightTo(
-                bbox.interpolate(0.6, 0.8),
+                bbox.interpolate(0.6, 0.94),
+                straight=rout_taper_in,
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.6, 0.92),
+                straight=rout_straight,
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.6, 0.9),
+                straight=rout_straight,
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.45, 0.9),
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.45, 0.8),
                 ),
             *(
                 tl.ElbowTo(
@@ -193,11 +232,32 @@ class ToyDESHIMA2(rai.Compo):
                     )
                 for fmkid in fmkids[1::2]
                 ),
+            # TODO would be great to have relative path points
+            tl.ElbowTo(
+                bbox.interpolate(0.9, 0.55),
+                ),
+            tl.ElbowTo(
+                bbox.interpolate(0.9, 0.45),
+                ),
             *(
                 tl.ElbowTo(
                     fmkid.marks.readout_connection,
                     )
                 for fmkid in fmkids[0::2][::-1]
+                ),
+            tl.ElbowTo(
+                bbox.interpolate(0.46, 0.3),
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.46, 0.05),
+                straight=rout_taper_out
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.46, 0.03),
+                straight=rout_straight_wide
+                ),
+            tl.StraightTo(
+                bbox.interpolate(0.46, 0.02),
                 ),
             ))
 
