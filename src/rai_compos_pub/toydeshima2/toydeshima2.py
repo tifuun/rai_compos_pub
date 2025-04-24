@@ -2,6 +2,7 @@
 
 import raimad as rai
 
+from rai_compos_pub import RAIText
 from rai_compos_pub import BetterPartial
 from rai_compos_pub import tl
 from rai_compos_pub import CPWStraight
@@ -305,5 +306,11 @@ class ToyDESHIMA2(rai.Compo):
             'fingers': 'l14',
             'coup': 'l14',
             'patch': 'l14',
+            'text': 'l3',
             })
+
+        self.subcompos.text = RAIText(
+            string='DESHIMA2.0 TOY CHIP BY MAYBETREE',
+            scale=1,
+            ).proxy().map('l3').bbox.bot_left.to(bbox.interpolate(0.02, 0.02))
 

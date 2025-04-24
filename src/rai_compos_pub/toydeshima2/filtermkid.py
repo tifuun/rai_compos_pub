@@ -2,6 +2,7 @@
 
 import raimad as rai
 
+from rai_compos_pub import RAIText
 from rai_compos_pub.toydeshima2.models import FilterMKIDSpec
 from rai_compos_pub.toydeshima2.mkid import MKID
 from rai_compos_pub.toydeshima2.filter import Filter
@@ -27,6 +28,16 @@ class FilterMKID(rai.Compo):
 
         self.subcompos.filt = filt
         self.subcompos.mkid = mkid
+        self.subcompos.text = (
+            RAIText(
+                string=f""" FILTER {spec.id} {spec.f_filter_design_ghz} GHz""",
+                scale=0.04
+                )
+            .proxy()
+            .map('text')
+            .rotate(rai.quartercircle)
+            .bbox.bot_right.to(mkid.bbox.bot_left)
+            )
 
         self.marks.thz_connection = filt.marks.thz_connection
         self.marks.readout_connection = mkid.marks.readout_connection
