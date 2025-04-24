@@ -284,10 +284,10 @@ class MKID(rai.Compo):
         coup.snap_above(fingers)
         patch.snap_above(coup)
 
-        self.subcompos.leek = leek
-        self.subcompos.fingers = fingers
-        self.subcompos.coup = coup
-        self.subcompos.patch = patch
+        self.subcompos.leek = leek.map('leek')
+        self.subcompos.fingers = fingers.map('fingers')
+        self.subcompos.coup = coup.map('coup')
+        self.subcompos.patch = patch.map('patch')
 
         # TODO remove this introspection and instead make leek expose
         # the mark

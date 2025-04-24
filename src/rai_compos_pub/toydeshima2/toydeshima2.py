@@ -8,6 +8,7 @@ from rai_compos_pub import CPWStraight
 from rai_compos_pub import CPWBend
 from rai_compos_pub import CPWTaperMetal
 from rai_compos_pub.toydeshima2.util import get_kid_params
+from rai_compos_pub.toydeshima2.mesh import Mesh
 from rai_compos_pub.toydeshima2.leaky_antenna import LeakyAntenna
 from rai_compos_pub.toydeshima2.filter import Filter
 from rai_compos_pub.toydeshima2.mkid import MKID
@@ -71,6 +72,13 @@ class ToyDESHIMA2(rai.Compo):
 
         corner_compo = Corner.partial(size=100, frac=3)
         corners = BBoxCorners(bbox, corner_compo).proxy()
+
+        mesh = Mesh(
+            length=bbox.length,
+            width=bbox.width,
+            wwire=3.1,
+            wcell=113,
+            ).proxy()
 
         antenna = LeakyAntenna(
             box_length=115.2,
@@ -265,12 +273,37 @@ class ToyDESHIMA2(rai.Compo):
         tl_rout.make_straights()
         tl_rout.make_bends()
 
-        self.subcompos.extend(tl_thz.straights_)
-        self.subcompos.extend(tl_thz.bends_)
+        lmap_ms = 'l5'
 
-        self.subcompos.extend(tl_rout.straights_)
-        self.subcompos.extend(tl_rout.bends_)
+        for straight in tl_thz.straights_:
+            self.subcompos.append(straight.map(lmap_ms))
+        for bend in tl_thz.bends_:
+            self.subcompos.append(bend.map(lmap_ms))
 
-        self.subcompos.antenna = antenna
-        self.subcompos.corners = corners
-        self.subcompos.bank = bank
+        lmap_cpw = {
+            'root': 'l1',
+            'conductor': 'l1',
+            'resist': None
+            }
+
+        for straight in tl_rout.straights_:
+            self.subcompos.append(straight.map(lmap_cpw))
+        for bend in tl_rout.bends_:
+            self.subcompos.append(bend.map(lmap_cpw))
+
+        self.subcompos.antenna = antenna.map({
+            'diel': 'l0',
+            'gnd': 'l7',
+            'conductor': 'l14',
+            })
+        self.subcompos.mesh = mesh.map('l7')
+        self.subcompos.corners = corners.map('l8')
+        self.subcompos.bank = bank.map({
+            'gnd': 'l7',
+            'metal': 'l6',
+            'leek': 'l5',
+            'fingers': 'l14',
+            'coup': 'l14',
+            'patch': 'l14',
+            })
+
