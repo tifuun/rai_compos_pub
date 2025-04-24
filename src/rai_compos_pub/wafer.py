@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 import raimad as rai
 import numpy as np
+import math
 
 class Wafer(rai.Compo):
     def _make(self, diameter: float = 100e2, flats: list = [32.5e2], flat_angle: list = [0]):
@@ -51,15 +46,7 @@ class Wafer(rai.Compo):
             
             self.subcompos.Wafer = Contour.proxy().rotate(np.deg2rad(-90)).map('_wafer_contour')
 
-
-# In[5]:
-
-
-Wafer().proxy().scale(1e-2)
-
-
-# In[ ]:
-
-
-
-
+            self.marks.east = rai.Circle(radius = diameter/2).bbox.mid_right
+            self.marks.west = rai.Circle(radius = diameter/2).bbox.mid_left
+            self.marks.north = rai.Circle(radius = diameter/2).bbox.top_mid
+            self.marks.south = rai.Circle(radius = diameter/2).bbox.bot_mid
