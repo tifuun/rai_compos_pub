@@ -76,10 +76,19 @@ def construct_bend(before, point, after, radius, compo):
 
     turn = angle_outgoing - angle_incoming
 
+    # FIXME why is this necessary!?
+    while turn > rai.semicircle:
+        angle_incoming += rai.fullcircle
+        turn = angle_outgoing - angle_incoming
+    while turn < -rai.semicircle:
+        angle_incoming -= rai.fullcircle
+        turn = angle_outgoing - angle_incoming
+
     # corner_angle is the inner angle made by the incoming and
     # outgoing straight measures. We calculate it by taking the
     # supplement of the turn angle
     corner_angle = rai.semicircle - abs(turn)
+    #corner_angle = rai.semicircle - turn
 
     match tl.classify_turn(before, point, after):
         case tl.TurnDirection.STRAIGHT:

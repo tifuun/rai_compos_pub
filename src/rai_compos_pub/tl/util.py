@@ -31,7 +31,7 @@ def classify_turn(before, point, after):
         return TurnDirection.STRAIGHT
     if prod > 0:
         return TurnDirection.LEFT
-    elif prod < 0:
+    if prod < 0:
         return TurnDirection.RIGHT
 
     # TODO turns around
