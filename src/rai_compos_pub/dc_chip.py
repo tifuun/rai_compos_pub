@@ -141,8 +141,6 @@ class DC_chip_monolayer(rai.Compo):
                            .bbox.mid.to(split.bbox.bot_right)
                            .movey(20)
                           )
-
-            rai.show(label_compo)
             
             Outer_square = rai.RectLW(2*split.bbox.length+5,split.bbox.width+5).proxy().bbox.mid.to(split.bbox.mid_right).movex(-1.25)
             Left_pads = Invert_Layer(Outer_square,split, rev_inner= False).proxy()
