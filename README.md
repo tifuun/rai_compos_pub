@@ -53,9 +53,10 @@ to make your component available in the root namespace of the package.
 
 As a demonstration of RAIMAD features, we have made a
 "toy" version of the DESHIMA2.0 spectrometer chip.
-All of its components can be found under <src/rai_compos_pub/toydeshima2>.
+All of its components can be found under
+[`src/rai_compos_pub/toydeshima2`](src/rai_compos_pub/toydeshima2).
 The toplevel `ToyDESHIMA2` component is in
-<src/rai_compos_pub/toydeshima2/toydeshima2.py>.
+[`src/rai_compos_pub/toydeshima2/toydeshima2.py`](src/rai_compos_pub/toydeshima2/toydeshima2.py).
 It can be exported to CIF like this (once you've `pip install -e`'d this repo):
 ```
 raimad export rai_compos_pub.toydeshima2.toydeshima2:ToyDESHIMA2
