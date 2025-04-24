@@ -149,7 +149,7 @@ class DC_chip_monolayer(rai.Compo):
         self.subcompos.label = (RAIText(label).proxy().scale(2e-1)
                                 .bbox.mid.to(self.subcompos.pads_L.bbox.bot_right)
                                 .movey(20)
-                                .map('bridge')
+                                .map('pads')
                                )
 class DC_chip(rai.Compo):
     def _make(self,
