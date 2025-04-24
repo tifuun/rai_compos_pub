@@ -182,19 +182,19 @@ class ToyDESHIMA2(rai.Compo):
                 bbox.interpolate(0.6, 0.95),
                 straight=rout_straight,
                 bend=rout_bend,
-                radius=5,
+                radius=1,
                 ),
             tl.StraightTo(
                 bbox.interpolate(0.6, 0.8),
                 ),
             *(
-                tl.StraightTo(
+                tl.ElbowTo(
                     fmkid.marks.readout_connection,
                     )
                 for fmkid in fmkids[1::2]
                 ),
             *(
-                tl.StraightTo(
+                tl.ElbowTo(
                     fmkid.marks.readout_connection,
                     )
                 for fmkid in fmkids[0::2][::-1]
