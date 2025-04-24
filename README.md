@@ -49,3 +49,15 @@ please put its code in a separate file under `src/rai_compos_pub`.
 Make sure to also add an import line in `src/rai_compos_pub/__init__.py`
 to make your component available in the root namespace of the package.
 
+## Toy DESHIMA2.0
+
+As a demonstration of RAIMAD features, we have made a
+"toy" version of the DESHIMA2.0 spectrometer chip.
+All of its components can be found under <src/rai_compos_pub/toydeshima2>.
+The toplevel `ToyDESHIMA2` component is in
+<src/rai_compos_pub/toydeshima2/toydeshima2.py>.
+It can be exported to CIF like this (once you've `pip install -e`'d this repo):
+```
+raimad export rai_compos_pub.toydeshima2.toydeshima2:ToyDESHIMA2
+```
+
