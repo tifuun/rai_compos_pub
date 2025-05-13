@@ -13,7 +13,7 @@ def autoconvert_dataclass(datacls, row):
 
     Only works for dataclasses where the type annotations
     are simple types. Won't work for unions, etc.
-    Use Pandas or Pydantic if you need more advanced deatures.
+    Use Pandas or Pydantic if you need more advanced features.
     """
     return datacls(*(
         fld.type(value)
