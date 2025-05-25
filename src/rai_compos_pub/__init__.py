@@ -18,9 +18,9 @@ from rai_compos_pub.cpw_simple import CPWBend_Simple
 
 from rai_compos_pub.raitext import RAIText
 
-from rai_compos_pub.vernier import Ruler_marker
-from rai_compos_pub.vernier import Vernier_marker
-from rai_compos_pub.vernier import Vernier_marker_ebeam
+from rai_compos_pub.markers.vernier import Ruler_marker
+from rai_compos_pub.markers.vernier import Vernier_marker
+from rai_compos_pub.markers.vernier import Vernier_marker_ebeam
 
 from rai_compos_pub.markers.opt_align_mark import Opt_align_mark
 
