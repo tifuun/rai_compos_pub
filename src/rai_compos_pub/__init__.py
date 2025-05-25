@@ -22,7 +22,7 @@ from rai_compos_pub.vernier import Ruler_marker
 from rai_compos_pub.vernier import Vernier_marker
 from rai_compos_pub.vernier import Vernier_marker_ebeam
 
-from rai_compos_pub.opt_align_mark import Opt_align_mark
+from rai_compos_pub.markers.opt_align_mark import Opt_align_mark
 
 from rai_compos_pub.logo import Logo
 
