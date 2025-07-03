@@ -50,3 +50,4 @@ class Wafer(rai.Compo):
             self.marks.west = rai.Circle(radius = diameter/2).bbox.mid_left
             self.marks.north = rai.Circle(radius = diameter/2).bbox.top_mid
             self.marks.south = rai.Circle(radius = diameter/2).bbox.bot_mid
+            self.marks.circle_center = rai.Circle(radius = diameter/2).bbox.mid
