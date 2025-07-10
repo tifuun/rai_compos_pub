@@ -48,3 +48,7 @@ from rai_compos_pub.bond_pad import Bond_pad
 from rai_compos_pub.markers.wafer_aligners import Wafer_flat_aligner
 from rai_compos_pub.markers.wafer_aligners import Wafer_ruler_aligner
 
+from rai_compos_pub.layer_functions import Layer_Union
+from rai_compos_pub.layer_functions import Layer_Merge
+from rai_compos_pub.layer_functions import Layer_Difference
+from rai_compos_pub.layer_functions import Layer_Intersection
