@@ -35,14 +35,14 @@ def compo_2_poly(compo: rai.Compo,
     return output_poly
 
 
-class Layer_Union(rai.Compo):
+class Layer_union(rai.Compo):
     """
     Merges all elements in a rai.Compo layer into a new compo (fuses overlapping elements together)
     compo: rai.Compo
     layer: str
     """
     def _make(self,
-              compo: rai.Compo,
+              compo: rai.Compo = rai.Circle(3),
               layer: str = "root",
              ):
         
@@ -56,7 +56,7 @@ class Layer_Union(rai.Compo):
             for i,poly in enumerate(union_poly.geoms):
                 self.subcompos[f"merge{i}"] = rai.CustomPoly(list(poly.exterior.coords)).proxy()
 
-class Layer_Intersection(rai.Compo):
+class Layer_intersection(rai.Compo):
     """
     Layer_Intersection: creates a single layer rai.Compo of the intersection between compo layers A and B  (A AND B)
 
@@ -88,7 +88,7 @@ class Layer_Intersection(rai.Compo):
                 self.subcompos[f"merge{i}"] = rai.CustomPoly(list(poly.exterior.coords)).proxy()
 
 
-class Layer_Merge(rai.Compo):
+class Layer_merge(rai.Compo):
     """
     Layer_Merge:        creates a single layer rai.Compo of the union between compo layers A and B         (A OR  B)
 
@@ -117,7 +117,7 @@ class Layer_Merge(rai.Compo):
                 self.subcompos[f"merge{i}"] = rai.CustomPoly(list(poly.exterior.coords)).proxy()
 
 
-class Layer_Difference(rai.Compo):
+class Layer_difference(rai.Compo):
     """
     Layer_Difference:   creates a single layer rai.Compo of the difference between compo layers A and B    (A NOT B)
     
