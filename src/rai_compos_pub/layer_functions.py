@@ -1,10 +1,10 @@
 """
 These layer functions can be used to manipulate a Raimad compo layer by specifying the compo and the layer
 
-Layer_Union:        creates a single layer rai.Compo in which all overlapping elements are fused
-Layer_Intersection: creates a single layer rai.Compo of the intersection between compo layers A and B  (A AND B)
-Layer_Merge:        creates a single layer rai.Compo of the union between compo layers A and B         (A OR  B)
-Layer_Difference:   creates a single layer rai.Compo of the difference between compo layers A and B    (A NOT B)
+Layer_union:        creates a single layer rai.Compo in which all overlapping elements are fused
+Layer_intersection: creates a single layer rai.Compo of the intersection between compo layers A and B  (A AND B)
+Layer_merge:        creates a single layer rai.Compo of the union between compo layers A and B         (A OR  B)
+Layer_difference:   creates a single layer rai.Compo of the difference between compo layers A and B    (A NOT B)
 
 """
 
@@ -73,8 +73,8 @@ class Layer_intersection(rai.Compo):
               layer_2: str = "root",
              ):
 
-        compo_union_1 = Layer_Union(compo_1)
-        compo_union_2 = Layer_Union(compo_2)
+        compo_union_1 = Layer_union(compo_1)
+        compo_union_2 = Layer_union(compo_2)
         
         poly_1 = compo_2_poly(compo_union_1,layer_1)
         poly_2 = compo_2_poly(compo_union_2,layer_2)
@@ -134,8 +134,8 @@ class Layer_difference(rai.Compo):
               layer_1: str = "root",
               layer_2: str = "root",
              ):
-        compo_union_1 = Layer_Union(compo_1)
-        compo_union_2 = Layer_Union(compo_2)
+        compo_union_1 = Layer_union(compo_1)
+        compo_union_2 = Layer_union(compo_2)
         
         poly_1 = compo_2_poly(compo_union_1,layer_1)
         poly_2 = compo_2_poly(compo_union_2,layer_2)
