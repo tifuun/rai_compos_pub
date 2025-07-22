@@ -1,0 +1,351 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# ### DC chips
+
+# In[321]:
+
+
+import raimad as rai
+import numpy as np
+import math
+
+
+# In[325]:
+
+
+class DC_chip_side(rai.Compo):
+    def _make(self,
+              size_pad: list = (52,77),
+              size_top_arm: tuple = (184, 11.2),
+              size_bottom_arm: tuple = (187.6, 5),
+              size_arm_up: tuple = (3.8,72.8),
+              pad_gap: bool = 3
+             ):
+        ## create pads
+        contact_pad = rai.RectLW(size_pad[0],size_pad[1]).proxy()
+        top_arm = rai.RectLW(size_top_arm[0],size_top_arm[1]).proxy()
+        bottom_arm = rai.RectLW(size_bottom_arm[0],size_bottom_arm[1]).proxy()
+        arm_up = rai.RectLW(size_arm_up[0], size_arm_up[1]).proxy()
+
+        ## create pads
+        self.subcompos.pad_TL = contact_pad.proxy()
+        self.subcompos.pad_BL = contact_pad.proxy().snap_below(self.subcompos.pad_TL).movey(-pad_gap)
+        self.subcompos.arm_T = top_arm.proxy().bbox.top_left.to(self.subcompos.pad_TL.bbox.top_left)
+        self.subcompos.arm_B1 = bottom_arm.proxy().bbox.top_left.to(self.subcompos.pad_BL.bbox.top_left)
+        self.subcompos.arm_B2 = arm_up.proxy().bbox.bot_right.to(self.subcompos.arm_B1.bbox.bot_right)
+
+        ## Marks
+        self.marks.connect_H = self.subcompos.arm_T.bbox.mid_right
+        self.marks.connect_V = self.subcompos.arm_B2.bbox.top_mid
+
+test = DC_chip_side()
+display(test)
+
+
+# In[328]:
+
+
+class DC_chip_center_region(rai.Compo):
+    def _make(self,
+              bridge_length: float = 8,
+              bridge_width: float = 0.1,
+              step_length: float = 8.5,
+              step_width: float = 1,
+              slab: bool = True,
+              slab_length: float = 20,
+              slab_width: float = 13,
+              margin = .75,
+             ):
+        
+        ## Bridge region
+        bridge_hor = rai.RectLW(bridge_length+2*(step_length+margin),bridge_width).proxy()
+        bridge_step = rai.RectLW(step_length,step_width).proxy()
+        ## Step gap
+
+        bridge_ver = rai.RectLW(bridge_width,margin-bridge_width/2)
+        
+        ## Create subcompos
+        # Horizontal parts
+        self.subcompos.bridge_hor = bridge_hor.proxy().map('bridge')
+        self.subcompos.bridge_hor_step_L = (bridge_step.proxy()
+                                            .bbox.mid_left.to(self.subcompos.bridge_hor.bbox.mid_left)
+                                            .map('bridge')
+                                           )
+        self.subcompos.bridge_hor_step_R = (bridge_step.proxy()
+                                            .bbox.mid_right.to(self.subcompos.bridge_hor.bbox.mid_right)
+                                            .map('bridge')
+                                           )
+        # Vertical parts
+        self.subcompos.bridge_ver_L = (bridge_ver.proxy()
+                                       .bbox.top_mid.to(self.subcompos.bridge_hor_step_L.bbox.mid_right)
+                                       .move(margin,-bridge_width/2)
+                                       .map('bridge')
+                                      )
+        self.subcompos.bridge_ver_step_L = (bridge_step.proxy().rotate(math.radians(90))
+                                            .bbox.top_mid.to(self.subcompos.bridge_ver_L.bbox.bot_mid)
+                                            .map('bridge')
+                                           )
+        self.subcompos.bridge_ver_R = (bridge_ver.proxy()
+                                       .bbox.top_mid.to(self.subcompos.bridge_hor_step_R.bbox.mid_left)
+                                       .move(-margin,-bridge_width/2)
+                                       .map('bridge')
+                                      )
+        self.subcompos.bridge_ver_step_R = (bridge_step.proxy().rotate(math.radians(90))
+                                            .bbox.top_mid.to(self.subcompos.bridge_ver_R.bbox.bot_mid)
+                                            .map('bridge')
+                                           )
+
+        ## Slab
+        if slab == True:
+            slab = rai.RectLW(step_length+2*margin+bridge_length,step_length+2*margin).proxy()
+            self.subcompos.slab = slab.proxy().map('slab')
+
+        ## Marks
+        self.marks.connect_L = self.subcompos.bridge_hor_step_L.bbox.mid_left
+        self.marks.connect_R = self.subcompos.bridge_hor_step_R.bbox.mid_right
+
+display(DC_chip_center_region().proxy().scale(15))
+
+
+# In[329]:
+
+
+from rai_compos_pub import RAIText
+from rai_compos_pub import Invert_Layer
+
+class DC_chip(rai.Compo):
+    def _make(self,
+              inverse_pads: bool = True,
+              bridge_layer: str = 'bridge',
+              bridge_length: float = 8,
+              bridge_width: float = 0.1,
+              total_width: float = 400,
+              step_length: float = 8.5,
+              step_width: float = 1,
+              slab: bool = True,
+              slab_length: float = 20,
+              slab_width: float = 13,
+              margin: float = 0.75,
+             ):
+        
+        ## Build center
+        center = (DC_chip_center_region(bridge_length,
+                                        bridge_width,
+                                        step_length,
+                                        step_width,
+                                        slab,
+                                        slab_length,
+                                        slab_width).proxy()
+                 )
+
+        ### Build pads
+        overlap = step_length/4
+        size_top_arm = (total_width/2 - center.bbox.length/2 + overlap, 11.2)
+        size_arm_up = (3.8,
+                       3+5+77-size_top_arm[1]/2-step_width/2-(margin-bridge_width/2) - step_length + overlap #set values correspond to standard arm size
+                      )
+        size_bottom_arm = (size_top_arm[0]+step_length-overlap+margin+size_arm_up[0]/2, 5)
+        
+        
+        left_pads = (DC_chip_side(size_top_arm = size_top_arm, size_bottom_arm =size_bottom_arm, size_arm_up = size_arm_up).proxy()
+                     .marks.connect_H.to(center.marks.connect_L)
+                     .movex(overlap)
+                    )
+        right_pads = (left_pads.proxy()
+                      .vflip()
+                      .marks.connect_H.to(center.marks.connect_R)
+                      .movex(-overlap)
+                     )
+
+        pads = Layer_merge(left_pads,right_pads)
+
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x 80 um'
+        label_compos = (RAIText(label).proxy()
+                        .scale(2e-1)
+                        .bbox.mid.to(left_pads.bbox.bot_right)
+                        .movey(20)
+                        .map('bridge')
+                       )
+
+        if inverse_pads == True:
+            outer_box = (rai.RectLW(pads.bbox.length+5,pads.bbox.width+5).proxy()
+                         .bbox.mid.to(pads.bbox.mid)
+                        )
+            inverse_pads = Invert_Layer(outer_box,pads,rev_inner=False).proxy().map("pads")
+            self.subcompos.pads = inverse_pads.proxy()
+        elif inverse_pads == False:
+            self.subcompos.pads = pads.proxy()
+        else:
+            print("ERROR: could not interpret 'inverse_pads'")
+            
+        self.subcompos.center = center.proxy()
+        self.subcompos.label = label_compos.proxy()
+
+
+
+test = DC_chip()
+display(test)
+rai.export_cif(test,"./DC_chip_test.cif")
+print("done")
+
+
+# In[248]:
+
+
+from rai_compos_pub import Layer_merge
+
+class DC_chip_monolayer_bridge(rai.Compo):
+    def _make(self,
+              inverse_pads: bool = False,
+              bridge_layer: str = 'bridge',
+              bridge_length: float = 8,
+              bridge_width: float = 0.1,
+              total_width: float = 400,
+              step_length: float = 8.5,
+              step_width: float = 1,
+              margin: float = 0.75,
+             ):
+        
+        ## Build center
+        center = (DC_chip_center_region(bridge_length,
+                                        bridge_width,
+                                        step_length,
+                                        step_width,
+                                       ).proxy()
+                 )
+
+        ### Build pads
+        overlap = step_length/4
+        size_top_arm = (total_width/2 - center.bbox.length/2 + overlap, 11.2)
+        size_arm_up = (3.8,
+                       3+5+77-size_top_arm[1]/2-step_width/2-(margin-bridge_width/2) - step_length + overlap #set values correspond to standard arm size
+                      )
+        size_bottom_arm = (size_top_arm[0]+step_length-overlap+margin+size_arm_up[0]/2, 5)
+        
+        left_pads = (DC_chip_side(size_top_arm = size_top_arm, size_bottom_arm =size_bottom_arm, size_arm_up = size_arm_up).proxy()
+                     .marks.connect_H.to(center.marks.connect_L)
+                     .movex(overlap)
+                    )
+        right_pads = (left_pads.proxy()
+                      .vflip()
+                      .marks.connect_H.to(center.marks.connect_R)
+                      .movex(-overlap)
+                     )
+
+        pads = Layer_merge(left_pads,right_pads)
+        merge = Layer_merge(pads, center, 'root', 'bridge')
+
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x 80 um'
+        label_compos = (RAIText(label).proxy()
+                        .scale(2e-1)
+                        .bbox.mid.to(left_pads.bbox.bot_right)
+                        .movey(20)
+                       )
+        merge_w_label = Layer_merge(merge,label_compos)
+        
+        if inverse_pads == False:
+            self.subcompos.merge = merge_w_label.proxy()
+        elif inverse_pads == True:
+            outer_box = (rai.RectLW(merge_w_label.bbox.length+5,merge_w_label.bbox.width+5).proxy()
+                         .bbox.mid.to(merge_w_label.bbox.mid)
+                        )
+            inverse_pads = Invert_Layer(outer_box,merge_w_label,rev_inner=False).proxy().map("pads")
+            self.subcompos.pads = inverse_pads.proxy()
+        else:
+            print("ERROR: could not interpret 'inverse_pads'")
+
+test = DC_chip_monolayer_bridge(inverse_pads = True)
+display(test)
+rai.export_cif(test,"./DC_chip_test.cif")
+print("done")
+
+
+# In[306]:
+
+
+class DC_chip_side_no_bridge(rai.Compo):
+    def _make(self,
+              width = 200,
+              bridge_length: float = 50,
+              bridge_width: float = 10,
+             ):
+        
+        ## create pads
+        contact_pad = rai.RectLW(52,77).proxy()
+        arm_up = rai.RectLW(3.8, 67.8).proxy()
+        arm_up_tip = rai.RectLW(1,6).proxy()
+        
+        bottom_arm = rai.RectLW(width-bridge_length+arm_up.bbox.length/2,5).proxy()
+        
+
+        top_arm = rai.RectLW(width-bridge_length-3.8/2-1/2, 11.2).proxy()
+        
+        bridge = rai.RectLW(width,bridge_width).proxy()
+
+        ## create pads
+        self.subcompos.pad_TL = contact_pad.proxy()
+        self.subcompos.pad_BL = contact_pad.proxy().snap_below(self.subcompos.pad_TL).movey(-3)
+        self.subcompos.arm_T = top_arm.proxy().bbox.top_left.to(self.subcompos.pad_TL.bbox.top_left)
+        self.subcompos.arm_B1 = bottom_arm.proxy().bbox.top_left.to(self.subcompos.pad_BL.bbox.top_left)
+        self.subcompos.arm_B2 = arm_up.proxy().bbox.bot_right.to(self.subcompos.arm_B1.bbox.bot_right)
+        self.subcompos.arm_B3 = arm_up_tip.proxy().bbox.bot_mid.to(self.subcompos.arm_B2.bbox.top_mid)
+
+        self.subcompos.bridge = bridge.proxy().bbox.bot_left.to(self.subcompos.arm_T.bbox.bot_left)
+
+        ## Marks
+        self.marks.connect = self.subcompos.bridge.bbox.mid_right
+
+test = DC_chip_side_no_bridge(width = 200, bridge_length = 75)
+display(test)
+rai.export_cif(test,"./DC_chip_test.cif")
+print("done")
+
+
+# In[330]:
+
+
+class DC_chip_monolayer(rai.Compo):
+    def _make(self,
+              inverse_pads: bool = False,
+              bridge_length: float = 200,
+              bridge_width: float = 10,
+              bridge_layer: str = 'bridge',
+              total_width: float = 400
+             ):
+        ## Contact pads
+        left_pads = DC_chip_side_no_bridge(total_width/2, bridge_length/2, bridge_width).proxy()
+        right_pads = (left_pads.proxy()
+                      .vflip()
+                      .marks.connect.to(left_pads.marks.connect)
+                     )
+        pads = Layer_merge(left_pads,right_pads)
+        
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um'
+        label_compo = (RAIText(label).proxy().scale(2e-1)
+                       .bbox.mid.to(left_pads.bbox.bot_right)
+                       .movey(20)
+                      )
+
+        if inverse_pads == False:
+            self.subcompos.pads = pads.proxy()
+            self.subcompos.label = label_compo.proxy()
+        elif inverse_pads == True:
+            merge = Layer_merge(pads,label_compo)
+            outer_box = (rai.RectLW(merge.bbox.length+5,merge.bbox.width+5).proxy()
+                         .bbox.mid.to(merge.bbox.mid)
+                        )
+            invert_merge = Invert_Layer(outer_box,merge,rev_inner=False).proxy().map("pads")
+            self.subcompos.inverse_merge = invert_merge.proxy()
+
+test = DC_chip_monolayer()
+display(test)
+rai.export_cif(test,"./DC_chip_test.cif")
+print("done")
+
+
+# In[ ]:
+
+
+
+
