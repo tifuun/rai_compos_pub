@@ -163,7 +163,7 @@ class DC_chip_center_region(rai.Compo):
 
 class DC_chip(rai.Compo):
     def _make(self,
-              inverse_pads: bool = True,
+              inverse_pads: bool = False,
               bridge_layer: str = 'bridge',
               bridge_length: float = 8,
               bridge_width: float = 0.1,
@@ -221,10 +221,10 @@ class DC_chip(rai.Compo):
             outer_box = (rai.RectLW(pads.bbox.length+5,pads.bbox.width+5).proxy()
                          .bbox.mid.to(pads.bbox.mid)
                         )
-            inverse_pads = Invert_Layer(outer_box,pads,rev_inner=False).proxy().map("pads")
-            self.subcompos.pads = inverse_pads.proxy()
+            inverse_pads = Invert_Layer(outer_box,pads,rev_inner=False).proxy()
+            self.subcompos.pads = inverse_pads.proxy().map("pads")
         elif inverse_pads == False:
-            self.subcompos.pads = pads.proxy()
+            self.subcompos.pads = pads.proxy().map("pads")
         else:
             print("ERROR: could not interpret 'inverse_pads'")
             
