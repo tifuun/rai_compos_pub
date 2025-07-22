@@ -283,8 +283,10 @@ class DC_chip_monolayer_bridge(rai.Compo):
 
         ### Build subcompos
         if inverse_pads == False:
-            self.subcompos.merge = merge_w_label.proxy()
+            self.subcompos.merge = merge.proxy()
+            self.subcompos.label = label_compos.proxy()
         elif inverse_pads == True:
+            merge_w_label = Layer_merge(merge,label_compos)
             outer_box = (rai.RectLW(merge_w_label.bbox.length+5,merge_w_label.bbox.width+5).proxy()
                          .bbox.mid.to(merge_w_label.bbox.mid)
                         )
@@ -292,4 +294,3 @@ class DC_chip_monolayer_bridge(rai.Compo):
             self.subcompos.pads = inverse_pads.proxy()
         else:
             print("ERROR: could not interpret 'inverse_pads'")
-
