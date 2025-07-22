@@ -40,8 +40,9 @@ from rai_compos_pub.ppc_kid import PPCKID
 
 from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
 
-from rai_compos_pub.dc_chip import DC_chip
-from rai_compos_pub.dc_chip import DC_chip_monolayer
+from rai_compos_pub.dc_chips import DC_chip_no_bridge
+from rai_compos_pub.dc_chips import DC_chip
+from rai_compos_pub.dc_chips import DC_chip_monolayer_bridge
 
 from rai_compos_pub.bond_pad import Bond_pad
 
