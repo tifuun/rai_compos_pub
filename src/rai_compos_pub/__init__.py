@@ -18,6 +18,11 @@ from rai_compos_pub.cpw_simple import CPWBend_Simple
 
 from rai_compos_pub.raitext import RAIText
 
+from rai_compos_pub.layer_functions import Layer_union
+from rai_compos_pub.layer_functions import Layer_merge
+from rai_compos_pub.layer_functions import Layer_difference
+from rai_compos_pub.layer_functions import Layer_intersection
+
 from rai_compos_pub.markers.vernier import Ruler_marker
 from rai_compos_pub.markers.vernier import Vernier_marker
 from rai_compos_pub.markers.vernier import Vernier_marker_ebeam
@@ -48,8 +53,3 @@ from rai_compos_pub.bond_pad import Bond_pad
 
 from rai_compos_pub.markers.wafer_aligners import Wafer_flat_aligner
 from rai_compos_pub.markers.wafer_aligners import Wafer_ruler_aligner
-
-from rai_compos_pub.layer_functions import Layer_union
-from rai_compos_pub.layer_functions import Layer_merge
-from rai_compos_pub.layer_functions import Layer_difference
-from rai_compos_pub.layer_functions import Layer_intersection
