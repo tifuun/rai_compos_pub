@@ -191,7 +191,7 @@ class DC_chip_center_region(rai.Compo):
             browser_default = 13,
         )
         margin = rai.Option.Geometric(
-            "states how far the steps are positioned w.r.t. each other. A larger margin is a larger spacing".,
+            "states how far the steps are positioned w.r.t. each other. A larger margin is a larger spacing",
             browser_default = 0.75,
         )
 
