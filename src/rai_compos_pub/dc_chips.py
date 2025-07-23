@@ -460,7 +460,7 @@ class DC_chip_monolayer_bridge(rai.Compo):
         merge = Layer_merge(pads, center, 'root', 'bridge')
 
         ### Build label
-        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um''
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um'
         label_compos = (RAIText(label).proxy()
                         .scale(2e-1)
                         .bbox.mid.to(left_pads.bbox.bot_right)
