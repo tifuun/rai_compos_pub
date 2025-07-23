@@ -162,8 +162,7 @@ def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = True):
     Outer shape should fully enclose the inner shape(s)
     The inner shape should not contain any other hole
     """
-
-
+    
     outer_coords = close_ring(outer_coords)
     inner_coords = close_ring(inner_coords)
 
@@ -186,14 +185,38 @@ def connect_outer_and_inner(outer_coords, inner_coords, rev_inner = True):
 
 class Invert_Layer(rai.Compo):
     """
-    Inverts one layer of a compo enclosed within another compo
+    Inverts one layer of a compo enclosed within another compo.
+    Use the rev_inner variable to change the walking order around the inner compo. (If it "fills" the inner compo)
     """
+
+    class Options:
+        outer_compo = rai.Options.Compos(
+            "outer Compo that that encloses the inner compos",
+            browser_default = rai.RectLW(10,10).proxy()
+        )
+        inner_compo = rai.Options.Compos(
+            "inner Compo to in enclosed by the outer compo",
+            browser_default = rai.Circle(3).proxy()
+        )
+        outer_layer = rai.Options.Layers(
+            "specified layer-name of the outer compo",
+            browser_default = "root"
+        )
+        inner_layer= rai.Options.Layers(
+            "specified layer-name of the inner compo",
+            browser_default = "root"
+        )
+        rev_inner = rai.Options.Compos(
+            "reverses the order in which the inner compo contour is followed (clockwise or anti-clockwise)",
+            browser_default = True
+        )
+    
     def _make(self,
               outer_compo: rai.Compo =  rai.RectLW(10,10).proxy(),
               inner_compos: rai.Compo = rai.Circle(3).proxy(),
-              inner_layer: str = "root",
               outer_layer: str = "root",
-              rev_inner: bool = True,
+              inner_layer: str = "root",
+              rev_inner: bool = False,
              ):
         
         flat_outer_compo = outer_compo.steamroll()
