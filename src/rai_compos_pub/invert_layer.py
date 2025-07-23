@@ -189,7 +189,7 @@ class Invert_Layer(rai.Compo):
     Use the rev_inner variable to change the walking order around the inner compo. (If it "fills" the inner compo)
     """
 
-    class Options:
+    class Option:
         outer_compo = rai.Options.Compos(
             "outer Compo that that encloses the inner compos",
             browser_default = rai.RectLW(10,10).proxy()
