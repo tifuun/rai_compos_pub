@@ -194,7 +194,7 @@ class Invert_Layer(rai.Compo):
             "outer Compo that that encloses the inner compos",
             browser_default = rai.RectLW(10,10).proxy()
         )
-        inner_compo = rai.Option.Geometric(
+        inner_compos = rai.Option.Geometric(
             "inner Compo to in enclosed by the outer compo",
             browser_default = rai.Circle(3).proxy()
         )
