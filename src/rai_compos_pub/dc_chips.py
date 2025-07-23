@@ -330,7 +330,9 @@ class DC_chip(rai.Compo):
                                         step_width,
                                         slab,
                                         slab_length,
-                                        slab_width).proxy()
+                                        slab_width,
+                                        margin
+                                       ).proxy()
                  )
 
         ### Build pads
@@ -355,7 +357,7 @@ class DC_chip(rai.Compo):
         pads = Layer_merge(left_pads,right_pads)
 
         ### Build label
-        label = f'{bridge_layer} - {bridge_width*10:.0f} x 80 um'
+        label = f'{bridge_layer} - {bridge_width*10:.0f} x {bridge_length*10:.0f} um'
         label_compos = (RAIText(label).proxy()
                         .scale(2e-1)
                         .bbox.mid.to(left_pads.bbox.bot_right)
