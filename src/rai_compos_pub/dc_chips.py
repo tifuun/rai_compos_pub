@@ -10,6 +10,27 @@ from rai_compos_pub import Layer_merge
 # ------------------------------------
 
 class DC_chip_side_no_bridge(rai.Compo):
+    """
+    A basic component for the DC chip structures - used to build DC_chip_no_bridge
+    """
+    
+    class Options:
+        width = rai.Option.Geometric(
+            "total width of one side of the DC structure",
+            browser_default = 200,
+        )
+        bridge_length = rai.Option.Geometric(
+            "length of the freestanding bridge arm of one side of the DC structure",
+            browser_default = 50
+        )
+        bridge_width = rai.Option.Geometric(
+            "width of the bridge line",
+            browser_default = 10
+        )
+
+    class Marks:
+        connect = rai.Mark("connection point at the center of the end of the bridge structure")
+    
     def _make(self,
               width = 200,
               bridge_length: float = 50,
@@ -42,6 +63,31 @@ class DC_chip_side_no_bridge(rai.Compo):
         self.marks.connect = self.subcompos.bridge.bbox.mid_right
 
 class DC_chip_no_bridge(rai.Compo):
+    """
+    DC chip structure used to probe the resistance of a 'wide' line with relatively large length.
+    Allows for an inverted "pads" layer by changing the 'inverse_pads' variable.
+    """
+
+    class Options:
+        total_width = rai.Option.Geometric(
+            "total width of one side of the DC structure",
+            browser_default = 200,
+        )
+        bridge_length = rai.Option.Geometric(
+            "length of the freestanding bridge arm of one side of the DC structure",
+            browser_default = 50
+        )
+        bridge_width = rai.Option.Geometric(
+            "width of the bridge line",
+            browser_default = 10
+        )
+        inverse_pads = rai.Option.Geometric(
+            "States whether to invert the layer containing the pads (changing polarity)"
+        )
+        bridge_layer = rai.Option.Geometric(
+            "Uses the given string to use in the DC structure label"
+        )
+        
     def _make(self,
               inverse_pads: bool = False,
               bridge_length: float = 200,
