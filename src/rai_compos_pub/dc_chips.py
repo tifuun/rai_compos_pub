@@ -70,22 +70,24 @@ class DC_chip_no_bridge(rai.Compo):
 
     class Options:
         total_width = rai.Option.Geometric(
-            "total width of one side of the DC structure",
-            browser_default = 200,
+            "total width of the DC structure",
+            browser_default = 400,
         )
         bridge_length = rai.Option.Geometric(
-            "length of the freestanding bridge arm of one side of the DC structure",
-            browser_default = 50
+            "length of the freestanding bridge arm of the DC structure",
+            browser_default = 100
         )
         bridge_width = rai.Option.Geometric(
             "width of the bridge line",
             browser_default = 10
         )
         inverse_pads = rai.Option.Geometric(
-            "States whether to invert the layer containing the pads (changing polarity)"
+            "States whether to invert the layer containing the pads (changing polarity)",
+            browser_default = False
         )
         bridge_layer = rai.Option.Geometric(
-            "Uses the given string to use in the DC structure label"
+            "Uses the given string to use in the DC structure label",
+            browser_default = "bridge"
         )
         
     def _make(self,
@@ -124,8 +126,15 @@ class DC_chip_no_bridge(rai.Compo):
 #--------------------------------------
 
 class DC_chip_side(rai.Compo):
+    """
+    A basic component for the DC chip structures - used to build DC_chip_no_bridge
+    """
+    class Marks:
+        connect_H = rai.Mark("connection point on the center of the end of the horizontal arm")
+        connect_V = rai.Mark("connection point on the center of the end of the vertical arm")
+    
     def _make(self,
-              size_pad: list = (52,77),
+              size_pad: tuple = (52,77),
               size_top_arm: tuple = (184, 11.2),
               size_bottom_arm: tuple = (187.6, 5),
               size_arm_up: tuple = (3.8,72.8),
@@ -149,6 +158,47 @@ class DC_chip_side(rai.Compo):
         self.marks.connect_V = self.subcompos.arm_B2.bbox.top_mid
 
 class DC_chip_center_region(rai.Compo):
+    """
+    A basic component for the DC chip structures - used to build DC structures that require narrow lines for their measurements.
+    """
+    class Options:
+        bridge_length = rai.Option.Geometric(
+            "length of the freestanding bridge line",
+            browser_default = 8
+        )
+        bridge_width = rai.Option.Geometric(
+            "width of the bridge line",
+            browser_default = 0.1
+        )
+        step_length = rai.Option.Geometric(
+            "the length of the steps connecting the pads with the central bridge",
+            browser_default = 8.5,
+        )
+        step_width = rai.Option.Geometric(
+            "the width of the steps connecting the pads with the central bridge",
+            browser_default = 1,
+        )
+        slab = rai.Option.Geometric(
+            "states whether to generate a slab underneath the bridge of an intermediate layer",
+            browser_default = True,
+        )
+        slab_length = rai.Option.Geometric(
+            "states the length of the slab",
+            browser_default = 20,
+        )
+        slab_width = rai.Option.Geometric(
+            "states the width of the slab",
+            browser_default = 13,
+        )
+        margin = rai.Option.Geometric(
+            "states how far the steps are positioned w.r.t. each other. A larger margin is a larger spacing".,
+            browser_default = 0.75,
+        )
+
+    class Marks:
+        connect_L = rai.Mark("connection point on the left side of the center of the horizontal step structure")
+        connect_L = rai.Mark("connection point on the right side of the center of the horizontal step structure")
+    
     def _make(self,
               bridge_length: float = 8,
               bridge_width: float = 0.1,
@@ -208,6 +258,57 @@ class DC_chip_center_region(rai.Compo):
         self.marks.connect_R = self.subcompos.bridge_hor_step_R.bbox.mid_right
 
 class DC_chip(rai.Compo):
+    """
+    DC chip structure used to probe the resistance of a 'narrow' line with relatively small length on top of a slab of non-conductive material."
+    Allows for an inverted "pads" layer by changing the 'inverse_pads' variable.
+    """
+    class Options:
+        inverse_pads = rai.Option.Geometric(
+            "States whether to invert the layer containing the pads (changing polarity)",
+            browser_default = False
+        )
+        bridge_layer = rai.Option.Geometric(
+            "Uses the given string to use in the DC structure label",
+            browser_default = "bridge"
+        )
+        bridge_length = rai.Option.Geometric(
+            "length of the freestanding bridge line",
+            browser_default = 8
+        )
+        bridge_width = rai.Option.Geometric(
+            "width of the bridge line",
+            browser_default = 0.1
+        )
+        total_width = rai.Option.Geometric(
+            "total width of one side of the DC structure",
+            browser_default = 400,
+        )
+        step_length = rai.Option.Geometric(
+            "the length of the steps connecting the pads with the central bridge",
+            browser_default = 8.5,
+        )
+        step_width = rai.Option.Geometric(
+            "the width of the steps connecting the pads with the central bridge",
+            browser_default = 1,
+        )
+        slab = rai.Option.Geometric(
+            "states whether to generate a slab underneath the bridge of an intermediate layer",
+            browser_default = True,
+        )
+        slab_length = rai.Option.Geometric(
+            "states the length of the slab",
+            browser_default = 20,
+        )
+        slab_width = rai.Option.Geometric(
+            "states the width of the slab",
+            browser_default = 13,
+        )
+        margin = rai.Option.Geometric(
+            "states how far the steps are positioned w.r.t. each other. A larger margin is a larger spacing".,
+            browser_default = 0.75,
+        )
+
+
     def _make(self,
               inverse_pads: bool = False,
               bridge_layer: str = 'bridge',
@@ -278,6 +379,44 @@ class DC_chip(rai.Compo):
         self.subcompos.label = label_compos.proxy()
 
 class DC_chip_monolayer_bridge(rai.Compo):
+    """
+    DC chip structure used to probe the resistance of a 'narrow' line with relatively small length.
+    Allows for an inverted "pads" layer by changing the 'inverse_pads' variable.
+    """
+    class Options:
+        inverse_pads = rai.Option.Geometric(
+            "States whether to invert the layer containing the pads (changing polarity)",
+            browser_default = False
+        )
+        bridge_layer = rai.Option.Geometric(
+            "Uses the given string to use in the DC structure label",
+            browser_default = "bridge"
+        )
+        bridge_length = rai.Option.Geometric(
+            "length of the freestanding bridge line",
+            browser_default = 8
+        )
+        bridge_width = rai.Option.Geometric(
+            "width of the bridge line",
+            browser_default = 0.1
+        )
+        total_width = rai.Option.Geometric(
+            "total width of one side of the DC structure",
+            browser_default = 400,
+        )
+        step_length = rai.Option.Geometric(
+            "the length of the steps connecting the pads with the central bridge",
+            browser_default = 8.5,
+        )
+        step_width = rai.Option.Geometric(
+            "the width of the steps connecting the pads with the central bridge",
+            browser_default = 1,
+        )
+        margin = rai.Option.Geometric(
+            "states how far the steps are positioned w.r.t. each other. A larger margin is a larger spacing".,
+            browser_default = 0.75,
+        )
+        
     def _make(self,
               inverse_pads: bool = False,
               bridge_layer: str = 'bridge',
