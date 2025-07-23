@@ -190,23 +190,23 @@ class Invert_Layer(rai.Compo):
     """
 
     class Options:
-        outer_compo = rai.Option.Compos(
+        outer_compo = rai.Option.Geometric(
             "outer Compo that that encloses the inner compos",
             browser_default = rai.RectLW(10,10).proxy()
         )
-        inner_compo = rai.Option.Compos(
+        inner_compo = rai.Option.Geometric(
             "inner Compo to in enclosed by the outer compo",
             browser_default = rai.Circle(3).proxy()
         )
-        outer_layer = rai.Option.Layers(
+        outer_layer = rai.Option.Geometric(
             "specified layer-name of the outer compo",
             browser_default = "root"
         )
-        inner_layer= rai.Option.Layers(
+        inner_layer= rai.Option.Geometric(
             "specified layer-name of the inner compo",
             browser_default = "root"
         )
-        rev_inner = rai.Option.Compos(
+        rev_inner = rai.Option.Geometric(
             "reverses the order in which the inner compo contour is followed (clockwise or anti-clockwise)",
             browser_default = True
         )
