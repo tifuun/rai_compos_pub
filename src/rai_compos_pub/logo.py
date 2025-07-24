@@ -1,11 +1,4 @@
 
-"""
-Genrator that builds components representing Logo's. These are added manually.
-Current list
-TIFUUN, TIFUUN_icon, DESHIMA, DESHIMA_icon, SRON_old, TU_Delft
-
-"""
-
 import raimad as rai
 
 class Logostring:
@@ -199,6 +192,15 @@ class Logostring:
             raise ValueError(f"No data found for key '{key}'.")
 
 class Logo(rai.Compo):
+    """
+    A generator that builds components representing Logos. These are added manually.
+    Current list
+    TIFUUN, TIFUUN_icon, DESHIMA, DESHIMA_icon, SRON_old, TU_Delft, SRON
+    """
+
+    class Options:
+        Logo = rai.Option.Geometric("Name or identifier of the logo", browser_default = "TIFUUN")
+        
     def _make(self,
              Logo = 'TIFUUN'
              ):
