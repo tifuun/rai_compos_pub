@@ -132,8 +132,8 @@ class Vernier_marker(rai.Compo):
         length = bar_length
         gap = pitch/2
         
-        Ruler_1 = Ruler_marker_v2(width, length, gap, number_of_bars).proxy()
-        Ruler_2 = (Ruler_marker_v2(width, length, gap+delta_pitch, number_of_bars)
+        Ruler_1 = Ruler_marker(width, length, gap, number_of_bars).proxy()
+        Ruler_2 = (Ruler_marker(width, length, gap+delta_pitch, number_of_bars)
                    .proxy()
                    .vflip()
                    .marks.zerobar_center.to(Ruler_1.marks.zerobar_center)
