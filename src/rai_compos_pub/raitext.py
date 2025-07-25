@@ -30,10 +30,12 @@ class RAIText(rai.Compo):
         )
         scale = rai.Option.Geometric(
             "Size scaling of the text",
-            browser_default = 10
+            browser_default = 1
         )
     
-    def _make(self, string: str = "RAIText", scale: float = 1):
+    def _make(self, 
+              string: str = "RAIText",
+              scale: float = 1):
         symbols_dict= {}
 
         """ Capitalized letters as Polygons """
