@@ -1,6 +1,25 @@
 import raimad as rai
 
 class Bond_pad(rai.Compo):
+    """
+    Standard bondpad object, used as a point to wire bond a chip to the chip holder. 
+    Customizable dimensions of the bondpad. Allows for a bonding material layer on top of the bondpad.
+    Can be used for both CPW ("trench" mode) and microstrip bondpad 
+    """
+    class Options:
+        slope_length = rai.Option.Geometric("length of the slope from the pad to the smallest width / to the connecting line", 
+                                            browser_default = 50)
+        line_width = rai.Option.Geometric("the width of the connecting line", 
+                                          browser_default = 2)
+        pad_trench_width = rai.Option.Geometric("the width of the trench surrounding the pad", 
+                                                browser_default = 20)
+        line_trench_width = rai.Option.Geometric("the width of the trench near the smalles point", 
+                                                 browser_default = 1)
+        pad_size = rai.Option.Geometric("the size of the pad", 
+                                        browser_default = 40)
+        mode = rai.Option.Geometric("specifies CPW ('trench') or microstrip mode", 
+                                    browser_default = "trench")"
+    
     def _make(self,
               slope_length: float = 50,
               line_width:float = 2,
