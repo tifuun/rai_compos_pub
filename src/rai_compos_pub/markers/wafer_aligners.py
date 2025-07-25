@@ -16,8 +16,8 @@ class Wafer_flat_aligner(rai.Compo):
               number_of_knots: int = 4 
              ):
         ## Shapes
-        axis = rai.RectLW(flat_length+1.3,4).proxy()
-        knot = rai.RectLW(200,40).proxy() 
+        axis = rai.RectLW(flat_length+1.3,flat_length/1500*4).proxy()
+        knot = rai.RectLW(flat_length/15*2,flat_length/150*4).proxy() 
 
         ## Subcompos
         self.subcompos.axis = axis
@@ -48,7 +48,7 @@ class Wafer_ruler_aligner(rai.Compo):
              ):
         
         back = rai.RectLW(back_length,back_height).proxy()
-        knot = rai.RectLW(4,10).proxy()
+        knot = rai.RectLW(back_length/350*4,back_height/3).proxy()
 
         num = math.floor(back.bbox.length/knot_spacing)
 
