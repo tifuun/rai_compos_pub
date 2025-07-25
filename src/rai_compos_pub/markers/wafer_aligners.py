@@ -7,6 +7,10 @@ class Wafer_flat_aligner(rai.Compo):
     """
     Alignment tool, used for aligning a mask with the flat of a wafer
     """
+    class Options:
+        flat_length = rai.Option.Geometric("total lenght of the wafer flat alligner", browser_default = 150)
+        number_of_knots = rai.Option.Geometric("number of knots (wide rectangular linepiece) along the aligner", browser_default = 4) 
+    
     def _make(self,
               flat_length:float = 1500,
               number_of_knots: int = 4 
@@ -30,8 +34,13 @@ class Wafer_flat_aligner(rai.Compo):
         
 class Wafer_ruler_aligner(rai.Compo):
     """
-    Alignment tool, used for aligning a mask with the contour of a wafer
+    Alignment tool, used for aligning a mask with the contour of a wafer using a ruler-shaped object
     """
+    class Options:
+        knot_spacing= rai.Option.Geometric("spacing between the hearts of each knot (line widening)", browser_default =  10)
+        back_length= rai.Option.Geometric("total lenght of the base of the ruler", browser_default =  70)
+        back_height= rai.Option.Geometric("widht of the base of the ruler", browser_default =  6),
+    
     def _make(self,
               knot_spacing:float = 50,
               back_length:float = 350,
