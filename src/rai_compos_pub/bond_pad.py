@@ -18,7 +18,7 @@ class Bond_pad(rai.Compo):
         pad_size = rai.Option.Geometric("the size of the pad", 
                                         browser_default = 40)
         mode = rai.Option.Geometric("specifies CPW ('trench') or microstrip mode", 
-                                    browser_default = "trench")"
+                                    browser_default = "trench")
     
     def _make(self,
               slope_length: float = 50,
