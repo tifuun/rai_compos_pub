@@ -2,15 +2,26 @@ import raimad as rai
 import numpy as np
 import math
 
-class Wafer(rai.Compo):
-    def _make(self, diameter: float = 100e2, flats: list = [32.5e2], flat_angle: list = [0]):
-        '''
-        This class provides a wafer as a base. The wafer is centred around 0,0. 
-        One can provide the lenght of each flat as well as theirs corresponding angles (w.r.t. the bottom) as a list 
+class Wafer(rai.Compo):        
+    '''
+    This class provides a wafer as a base. The wafer is centred around 0,0. 
+    One can provide the length of each flat as well as its corresponding angles (w.r.t. the bottom) as a list 
 
-        The standard diameter is 100 mm (1e5 um)
-        The standard flat is 32.5 mm at the bottom
-        '''
+    The standard diameter is 100 mm (1e5 um)
+    The standard flat is 32.5 mm at the bottom
+    '''
+
+    class Options:              
+        diameter = rai.Option.Geometric("specifies the diameter of the", browser_default = 100)
+        flats = rai.Option.Geometric("specifies the length of the flats", browser_default =  [32.5,20])
+        flat_angle = rai.Option.Geometric("degrees, specifies the angle of the normal of the flat.", browser_default = [0,135])
+
+    def _make(self, 
+              diameter: float = 100e2, 
+              flats: list = [32.5e2], 
+              flat_angle: list = [0]
+             ):
+
         
         Contour = rai.Circle(radius = diameter/2)
         for i, flat in enumerate(flats):
