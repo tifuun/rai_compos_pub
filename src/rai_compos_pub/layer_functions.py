@@ -22,6 +22,11 @@ def compo_2_poly(compo: rai.Compo,
     compo: rai.Compo
     layer: str
     """
+    
+    class Options:
+     compo = rai.Option.Geometric("The subject compo")
+     layer = rai.Option.Geometric("Specifies the layer of the subject compo")
+                 
     flat_compo_layer = compo.steamroll()[layer]
     if len(flat_compo_layer) == 1:
         output_poly = Polygon(flat_compo_layer[0])
@@ -41,6 +46,11 @@ class Layer_union(rai.Compo):
     compo: rai.Compo
     layer: str
     """
+
+    class Options:
+     compo = rai.Option.Geometric("the subject compo", browser_default = rai.Circle(3))
+     layer = rai.Option.Geometric("Specifies the layer of the subject compo", browser_default = "root")
+     
     def _make(self,
               compo: rai.Compo = rai.Circle(3),
               layer: str = "root",
@@ -66,6 +76,17 @@ class Layer_intersection(rai.Compo):
     layer_2: str
     
     """
+
+    class Options:
+     compo_1 = rai.Option.Geometric("Specifies the first compo", 
+                                    browser_default = rai.RectLW(5,5).proxy())
+     compo_2 = rai.Option.Geometric("Specifies the second compo", 
+                                    browser_default = rai.Circle(3).proxy().move(3,2))
+     layer_1 = rai.Option.Geometric("Specifies the layer of the first compo", 
+                                    browser_default = "root")
+     layer_2 = rai.Option.Geometric("Specifies the layer of the second compo", 
+                                    browser_default = "root")
+     
     def _make(self,
               compo_1: rai.Compo =  rai.RectLW(5,5).proxy(),
               compo_2: rai.Compo = rai.RectLW(5,5).proxy().move(3,2),
@@ -90,7 +111,7 @@ class Layer_intersection(rai.Compo):
 
 class Layer_merge(rai.Compo):
     """
-    Layer_Merge:        creates a single layer rai.Compo of the union between compo layers A and B         (A OR  B)
+    Layer_Merge:        creates a single layer rai.Compo of the union between compo layers A and B         (A OR B)
 
     compo_1: rai.Compo
     compo_2: rai.Compo
@@ -98,6 +119,17 @@ class Layer_merge(rai.Compo):
     layer_2: str
     
     """
+
+    class Options:
+     compo_1 = rai.Option.Geometric("Specifies the first compo", 
+                                    browser_default = rai.RectLW(5,5).proxy())
+     compo_2 = rai.Option.Geometric("Specifies the second compo", 
+                                    browser_default = rai.Circle(3).proxy().move(3,2))
+     layer_1 = rai.Option.Geometric("Specifies the layer of the first compo", 
+                                    browser_default = "root")
+     layer_2 = rai.Option.Geometric("Specifies the layer of the second compo", 
+                                    browser_default = "root")
+     
     def _make(self,
               compo_1: rai.Compo =  rai.RectLW(5,5).proxy(),
               compo_2: rai.Compo = rai.RectLW(5,5).proxy().move(3,2),
@@ -128,6 +160,17 @@ class Layer_difference(rai.Compo):
     layer_2: str
     
     """
+   
+    class Options:
+     compo_1 = rai.Option.Geometric("Specifies the first compo",
+                                    browser_default = rai.RectLW(5,5).proxy())
+     compo_2 = rai.Option.Geometric("Specifies the second compo", 
+                                    browser_default = rai.Circle(3).proxy().move(3,2))
+     layer_1 = rai.Option.Geometric("Specifies the layer of the first compo", 
+                                    browser_default = "root")
+     layer_2 = rai.Option.Geometric("Specifies the layer of the second compo", 
+                                    browser_default = "root")
+     
     def _make(self,
               compo_1: rai.Compo =  rai.RectLW(5,5).proxy(),
               compo_2: rai.Compo = rai.RectLW(5,5).proxy().move(3,2),
