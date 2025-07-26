@@ -66,7 +66,7 @@ class Wafer_ruler_aligner(rai.Compo):
                                          )
             self.subcompos[f"label{i}"] = (RAIText(f'{label:.0f}')
                                            .proxy()
-                                           .scale(0.2)
+                                           .scale(knot_spacing/50*0.2)
                                            .snap_above(self.subcompos[f'knot{i}']).movey(5)
                                           )
 
