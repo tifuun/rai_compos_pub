@@ -93,6 +93,8 @@ class Ruler_marker(rai.Compo):
 
 class Vernier_marker(rai.Compo):
     """
+    A marker measure misaligment between two layers along one axis
+    
     Requires: RAIText
     """
     
@@ -156,8 +158,13 @@ class Vernier_marker(rai.Compo):
 
 class Vernier_marker_ebeam(rai.Compo):
     """
-    Standard marker used to check for ebeam misalignments
+    Standard marker used to quantify e-beam misalignments. Vernier for two orthogonal axis
     """
+
+    class Options:
+        layer_list = rai.Option("contains the layer names of the two sides of the vernier pattern",
+                                browser_default= ['layer1','layer2'])
+
     
     def _make(self,
              layer_list: list = ['layer1','layer2'],
