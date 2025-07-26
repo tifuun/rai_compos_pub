@@ -6,6 +6,12 @@ from rai_compos_pub import RAIText
 
 #### Large marker
 class Opt_align_large_mark(rai.Compo):
+    """
+    """
+
+    class Options:
+        pass
+        
     def _make(self,
               height: int = 390/2, #bar height
               width: int = 108, # default bar width
@@ -159,6 +165,10 @@ class Opt_align_mark(rai.Compo):
     Standard marker used during optical alignment using mask alligner.
     The patern has a standard shape
     """
+
+    class Options:
+        layer_list = rai.Option("List of the layer names of the two layers", browser_default = ['layer1','layer2'])
+        label = rai.Option("label on top right of marker", browser_default = "1")
             
     def _make(self,
              layer_list = ['layer1','layer2'],
