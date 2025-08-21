@@ -39,7 +39,7 @@ class Wafer_ruler_aligner(rai.Compo):
     class Options:
         knot_spacing= rai.Option.Geometric("Spacing between the hearts of each knot (line widening)", browser_default =  10)
         back_length= rai.Option.Geometric("Total length of the base of the ruler", browser_default =  70)
-        back_height= rai.Option.Geometric("Width of the base of the ruler", browser_default =  6),
+        back_height= rai.Option.Geometric("Width of the base of the ruler", browser_default =  6)
     
     def _make(self,
               knot_spacing:float = 50,
