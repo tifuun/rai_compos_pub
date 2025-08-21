@@ -37,9 +37,9 @@ class Wafer_ruler_aligner(rai.Compo):
     Alignment tool, used for aligning a mask with the contour of a wafer using a ruler-shaped object
     """
     class Options:
-        knot_spacing= rai.Option.Geometric("spacing between the hearts of each knot (line widening)", browser_default =  10)
-        back_length= rai.Option.Geometric("total lenght of the base of the ruler", browser_default =  70)
-        back_height= rai.Option.Geometric("widht of the base of the ruler", browser_default =  6),
+        knot_spacing= rai.Option.Geometric("Spacing between the hearts of each knot (line widening)", browser_default =  10)
+        back_length= rai.Option.Geometric("Total length of the base of the ruler", browser_default =  70)
+        back_height= rai.Option.Geometric("Width of the base of the ruler", browser_default =  6),
     
     def _make(self,
               knot_spacing:float = 50,
@@ -67,7 +67,7 @@ class Wafer_ruler_aligner(rai.Compo):
             self.subcompos[f"label{i}"] = (RAIText(f'{label:.0f}')
                                            .proxy()
                                            .scale(knot_spacing/50*0.2)
-                                           .snap_above(self.subcompos[f'knot{i}']).movey(5)
+                                           .snap_above(self.subcompos[f'knot{i}']).movey(knot_spacing/10)
                                           )
 
             self.marks.center = self.subcompos.back.bbox.top_mid
