@@ -123,7 +123,7 @@ class RAIText(rai.Compo):
 
 
         """ Numbers as Polygons """
-        symbols_dict["0"] = rai.CustomPoly([(0,10),(0,60),(10,70),(40,70),(50,60),(15,60),(10,55),(10,15),(15,10),(35,10),(40,15),(40,55),(35,60),(50,60),(50,10),(40,0),(10,0)
+        symbols_dict["0"] = rai.CustomPoly([(0,10),(0,60),(10,70),(40,70),(50,60),(15,60),(10,55),(10,15),(15,10),(35,10),(40,15), (40,25),(30,25),(30,45),(20,45),(20,25),(40,25) ,(40,55),(35,60),(50,60),(50,10),(40,0),(10,0)
                                              ])
         symbols_dict["1"] = rai.CustomPoly([(0,0),(0,10),(20,10),(20,50),(15,50),(5,40),(0,40),(0,50),(20,70),(30,70),(30,10),(50,10),(50,0)
                                              ])
@@ -241,7 +241,6 @@ class RAIText(rai.Compo):
                 translation += 20*scale
             elif string_chars[i] == "0":
                 self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
-                self.subcompos[f"Object_{i}_2"] = rai.CustomPoly([(20,25),(30,25),(30,45),(20,45)]).proxy().scale(scale).move((translation),0)
                 translation += 60*scale ##Fontwidht 60
             elif string_chars[i] == "|":
                 self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
