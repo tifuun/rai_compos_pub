@@ -40,6 +40,7 @@ from rai_compos_pub.vialess_msl import VialessMSL
 from rai_compos_pub.wafer import Wafer 
 
 from rai_compos_pub.invert_layer import Invert_Layer
+from rai_compos_pub.invert_layer_v2 import Invert_layer_v2
 
 from rai_compos_pub.ppc_kid import PPCKID
 
