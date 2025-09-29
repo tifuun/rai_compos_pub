@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 from rai_compos_pub import RAIText
-from rai_compos_pub import Invert_Layer
+from rai_compos_pub import Invert_layer_v2
 from rai_compos_pub import Layer_merge
 
 ## DC_chip without a bridge
