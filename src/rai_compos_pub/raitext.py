@@ -239,9 +239,9 @@ class RAIText(rai.Compo):
                 self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
                 self.subcompos[f"Object_{i}_2"] = rai.CustomPoly([(0,70),(10,70),(10,20),(0,20)]).proxy().scale(scale).move((translation),0)
                 translation += 20*scale
-            elif string_chars[i] == "0":
-                self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
-                translation += 60*scale ##Fontwidht 60
+            # elif string_chars[i] == "0":
+            #     self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
+            #     translation += 60*scale ##Fontwidht 60
             elif string_chars[i] == "|":
                 self.subcompos[f"Object_{i}"] = symbols_dict[string_chars[i]].proxy().scale(scale).move(translation,0)
                 self.subcompos[f"Object_{i}_2"] = rai.CustomPoly([(0,30),(10,30),(10,0),(0,0)]).proxy().scale(scale).move((translation),0)
