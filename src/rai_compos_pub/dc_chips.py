@@ -119,7 +119,7 @@ class DC_chip_no_bridge(rai.Compo):
             outer_box = (rai.RectLW(merge.bbox.length+5,merge.bbox.width+5).proxy()
                          .bbox.mid.to(merge.bbox.mid)
                         )
-            invert_merge = Invert_Layer(outer_box,merge,rev_inner=False).proxy().map("pads")
+            invert_merge = Invert_layer_v2(outer_box,merge,rev_inner=False).proxy().map("pads")
             self.subcompos.inverse_merge = invert_merge.proxy()
 
 ## DC_chip with Bridge
@@ -370,7 +370,7 @@ class DC_chip(rai.Compo):
             outer_box = (rai.RectLW(pads.bbox.length+5,pads.bbox.width+5).proxy()
                          .bbox.mid.to(pads.bbox.mid)
                         )
-            inverse_pads = Invert_Layer(outer_box,pads,rev_inner=False).proxy()
+            inverse_pads = Invert_layer_v2(outer_box,pads,rev_inner=False).proxy()
             self.subcompos.pads = inverse_pads.proxy().map("pads")
         elif inverse_pads == False:
             self.subcompos.pads = pads.proxy().map("pads")
@@ -477,7 +477,7 @@ class DC_chip_monolayer_bridge(rai.Compo):
             outer_box = (rai.RectLW(merge_w_label.bbox.length+5,merge_w_label.bbox.width+5).proxy()
                          .bbox.mid.to(merge_w_label.bbox.mid)
                         )
-            inverse_pads = Invert_Layer(outer_box,merge_w_label,rev_inner=False).proxy().map("pads")
+            inverse_pads = Invert_layer_v2(outer_box,merge_w_label,rev_inner=False).proxy().map("pads")
             self.subcompos.pads = inverse_pads.proxy()
         else:
             print("ERROR: could not interpret 'inverse_pads'")
