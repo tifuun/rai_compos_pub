@@ -128,9 +128,7 @@ def build_bridge(outer_path,inner_loop,break_index,outer_bridge_point):
     return full_loop
 
 
-Invert Layer function
-######################
-
+########## Invert Layer function ############
 
 class Invert_layer_v2(rai.Compo):
     """
