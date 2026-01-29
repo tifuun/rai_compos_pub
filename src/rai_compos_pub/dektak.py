@@ -1,4 +1,5 @@
 import raimad as rai
+from rai_compos_pub import RAIText
 
 class DektakModule(rai.Compo):
     def _make(
