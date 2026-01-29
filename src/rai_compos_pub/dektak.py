@@ -1,8 +1,4 @@
-import numpy as np
 import raimad as rai
-from device_markings import DeviceChipText
-from rai_compos_pub import Invert_Layer, Invert_layer_v2, Layer_union, RAIText, Vernier_marker_ebeam
-
 
 class DektakModule(rai.Compo):
     def _make(
