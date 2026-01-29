@@ -3,9 +3,9 @@ import raimad as rai
 class DektakModule(rai.Compo):
     def _make(
         self,
-        kvlayer1,
-        kvlayer2,
-        kvlayer3,
+        kvlayer1 = ("1","layer1"),
+        kvlayer2 = ("2","layer2"),
+        kvlayer3 = ("3","layer3"),
     ):
         num_layer1, layer1 = kvlayer1
         num_layer2, layer2 = kvlayer2
