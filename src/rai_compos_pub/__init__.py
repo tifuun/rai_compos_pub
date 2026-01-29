@@ -54,3 +54,5 @@ from rai_compos_pub.bond_pad import Bond_pad
 
 from rai_compos_pub.markers.wafer_aligners import Wafer_flat_aligner
 from rai_compos_pub.markers.wafer_aligners import Wafer_ruler_aligner
+
+from rai_compos_pub.markers.dektak import DektakModule, DektakAssembly
