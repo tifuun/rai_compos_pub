@@ -45,6 +45,7 @@ from rai_compos_pub.invert_layer_v2 import Invert_layer_v2
 from rai_compos_pub.ppc_kid import PPCKID
 
 from rai_compos_pub.ppckid_v2 import PPCKID_Assembly_v2
+from rai_compos_pub.ppckid_v3 import PPCKID_Assembly_v3
 
 from rai_compos_pub.dc_chips import DC_chip_no_bridge
 from rai_compos_pub.dc_chips import DC_chip
