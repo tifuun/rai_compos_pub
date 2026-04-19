@@ -26,15 +26,15 @@ class BendSpec:
     theta1: float
     dtheta: float
     radius: float
-    point_enter: rai.t.Point
-    point_exit: rai.t.Point
-    point_center: rai.t.Point
+    point_enter: rai.types.Vec2
+    point_exit: rai.types.Vec2
+    point_center: rai.types.Vec2
 
     compo: rai.t.CompoType
 
 @dataclass
 class StraightSpec:
-    start: rai.t.Point
+    start: rai.types.Vec2
     angle: float
     length: float
 
@@ -43,7 +43,7 @@ class StraightSpec:
 ## UNUSED ##
 @dataclass
 class BridgeSpec:
-    start: rai.t.Point
+    start: rai.types.Vec2
     angle: float
     length: float
 

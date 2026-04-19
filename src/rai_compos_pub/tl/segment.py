@@ -7,7 +7,7 @@ import raimad as rai
 # Might be able to include other things in the future
 # (Advances?) so best to keep an alias for now
 # TODO move to pc.typing?
-SegmentTarget = rai.typing.Point
+SegmentTarget = rai.types.Vec2
 
 class Segment:
     """

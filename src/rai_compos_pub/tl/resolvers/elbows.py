@@ -24,7 +24,7 @@ def resolve_elbows(path):
     return newpath
 
 
-def resolve_elbow(before: rai.t.Point, elbow: tl.ElbowTo):
+def resolve_elbow(before: rai.types.Vec2, elbow: tl.ElbowTo):
     if before[0] == elbow.to[0] or before[1] == elbow.to[1]:
         return [
             tl.StraightTo(elbow.to),
