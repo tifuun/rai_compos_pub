@@ -17,7 +17,7 @@ class FilterMKID(rai.Compo):
 
         filt = filter_compo(
             res_l = spec.l_coup_um * 1e-1,
-            ).proxy().hflip()
+            ).proxy().vflip()
         mkid = mkid_compo(
             l1=spec.l_al_mm * 1e2,
             l2=spec.l_wide_mm * 1e2,

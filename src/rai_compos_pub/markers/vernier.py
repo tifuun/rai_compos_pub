@@ -137,7 +137,7 @@ class Vernier_marker(rai.Compo):
         Ruler_1 = Ruler_marker(width, length, gap, number_of_bars).proxy()
         Ruler_2 = (Ruler_marker(width, length, gap+delta_pitch, number_of_bars)
                    .proxy()
-                   .vflip()
+                   .hflip()
                    .marks.zerobar_center.to(Ruler_1.marks.zerobar_center)
                   )
 

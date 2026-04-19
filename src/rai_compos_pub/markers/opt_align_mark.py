@@ -38,9 +38,9 @@ class Opt_align_large_mark(rai.Compo):
         bar = rai.CustomPoly(bar_list).proxy().move((-width-gap/2+squeeze),0).map(layer_list[0])
 
         self.subcompos['bar_1'] = bar.proxy()
-        self.subcompos['bar_2'] = bar.proxy().hflip()
-        self.subcompos['bar_3'] = bar.proxy().vflip()
-        self.subcompos['bar_4'] = bar.proxy().hflip().vflip()
+        self.subcompos['bar_2'] = bar.proxy().vflip()
+        self.subcompos['bar_3'] = bar.proxy().hflip()
+        self.subcompos['bar_4'] = bar.proxy().vflip().hflip()
 
         bol = rai.Circle(gap/2).proxy().map(layer_list[1])
 
@@ -92,9 +92,9 @@ class Opt_align_mark_minor(rai.Compo):
         pos_correction_outer = (outer_box_size[1] - yo)/2
         
         self.subcompos['inner_box_l'] = inner_box_l
-        self.subcompos['inner_box_2'] = inner_box_l.proxy().vflip()
+        self.subcompos['inner_box_2'] = inner_box_l.proxy().hflip()
         self.subcompos['outer_box_l'] = outer_box_l
-        self.subcompos['outer_box_2'] = outer_box_l.proxy().vflip()
+        self.subcompos['outer_box_2'] = outer_box_l.proxy().hflip()
 
         
         for i in range(0,circles_inner):

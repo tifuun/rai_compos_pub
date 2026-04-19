@@ -39,7 +39,7 @@ class FilterBank(rai.Compo):
 
             fmkid = FilterMKID(spec, filter_compo, mkid_compo).proxy()
             if i % 2 == 0:
-                fmkid.hflip()
+                fmkid.vflip()
             fmkid.marks.thz_connection.to((i * mkid_spacing, 0))
 
             self.subcompos[f'fmkid_{spec.id}'] = fmkid

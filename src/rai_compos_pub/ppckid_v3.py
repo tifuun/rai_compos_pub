@@ -85,7 +85,7 @@ class PPCKID_Inductor_Coupler_v2(rai.Compo):
         coupler_line = rai.RectLW(width, line_width).proxy()
         
         left_line = rai.RectLW(line_width, height-2*line_width).proxy().move(-width/2+line_width/2,-height/2+line_width/2)
-        right_line = left_line.proxy().vflip()
+        right_line = left_line.proxy().hflip()
 
         ### Assemble subcomponents
         self.subcompos.coupler_line = coupler_line.proxy()
@@ -226,7 +226,7 @@ class PPCKID_Assembly_v3(rai.Compo):
             amount = amount,
         ).proxy().map(junk_layer)
         self.subcompos.meander_L = meander.proxy().marks.exit.to(self.subcompos.connector_L.bbox.mid_left)
-        self.subcompos.meander_R = meander.proxy().vflip().marks.exit.to(self.subcompos.connector_R.bbox.mid_right)
+        self.subcompos.meander_R = meander.proxy().hflip().marks.exit.to(self.subcompos.connector_R.bbox.mid_right)
 
         # Coupler
         coupler = PPCKID_Inductor_Coupler_v2(

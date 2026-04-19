@@ -42,7 +42,7 @@ class Smiley(rai.Compo):
             ).proxy().map('mouth')
 
         if happiness < 0:
-            smile.bbox.mid.hflip()
+            smile.bbox.mid.vflip()
 
         eye_l.marks.center.to(
             face.bbox.interpolate(0.3, 0.7)

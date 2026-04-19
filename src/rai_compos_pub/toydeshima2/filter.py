@@ -153,7 +153,7 @@ class Filter(rai.Compo):
             (coup_bot_w, coup_bot_w),
             (coup_bot_w, 0)
             )).proxy()
-        corner_r = corner_l.shallow_copy().vflip()
+        corner_r = corner_l.shallow_copy().hflip()
 
         line_top.snap_below(coup_bot)
         line_top.movey(-gap)
@@ -177,7 +177,7 @@ class Filter(rai.Compo):
             gap_width=gap_w,
             gap_length=gap_l,
             gap_dist = (gnd_bot_l + coup_bot_l + coup_bot_w) / 2,
-            ).proxy().hflip()
+            ).proxy().vflip()
 
         gnd_bot.snap_below(gnd_top)
 

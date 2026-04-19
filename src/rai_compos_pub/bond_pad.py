@@ -50,7 +50,7 @@ class Bond_pad(rai.Compo):
             self.subcompos.trench_pad_T = trench_pad.proxy().map("trench")
             self.subcompos.trench_pad_B = trench_pad.proxy().snap_below(pad).map("trench")
             self.subcompos.trench_slope_T = slope_trench.proxy().map("trench")
-            self.subcompos.trench_slope_B = slope_trench.proxy().hflip().map("trench")
+            self.subcompos.trench_slope_B = slope_trench.proxy().vflip().map("trench")
             self.subcompos.trench_end = end_trench.proxy().snap_left(pad).map("trench")
 
         else:

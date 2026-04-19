@@ -170,7 +170,7 @@ class MSLHalves(rai.Compo):
         left = MSLHalf().proxy()
         right = MSLHalf().proxy()
 
-        right.vflip()
+        right.hflip()
 
         right.snap_right(left)
 
@@ -219,7 +219,7 @@ class Snake(rai.Compo):
             thetamid=0,
             dtheta=rai.semicircle,
             ).proxy()
-        bend2 = bend1.shallow_copy().vflip()
+        bend2 = bend1.shallow_copy().hflip()
         bend3 = bend1.shallow_copy()
 
         bend1.bbox.bot_left.to(straight1.bbox.bot_right)
@@ -264,7 +264,7 @@ class VialessMSL(rai.Compo):
         cover_l = Cover().proxy()
         cover_r = cover_l.shallow_copy()
 
-        cover_r.vflip()
+        cover_r.hflip()
 
         headphones.bbox.top_mid.to(halves.bbox.mid).movey(-10)
         snake.bbox.bot_mid.to(halves.bbox.mid).movey(10)

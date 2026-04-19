@@ -87,7 +87,7 @@ class MegaDESHIMA(rai.Compo):
             'text': 'l3',
             })
 
-        bank1 = bank.proxy().vflip()
+        bank1 = bank.proxy().hflip()
         bank2 = bank.proxy().rotate(rai.quartercircle)
         bank3 = bank.proxy()
         bank4 = bank.proxy().rotate(-rai.quartercircle)
